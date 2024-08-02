@@ -1,71 +1,71 @@
 <?php
-// Inclui o arquivo de configuração que deve conter as informações para conectar ao banco de dados.
-include 'config.php';
-session_start();
+    // Inclui o arquivo de configuração que deve conter as informações para conectar ao banco de dados.
+    include 'config.php';
+    session_start();
 
-// Verifica se o usuário está logado, caso contrário, redireciona para a página de login.
-if (!isset($_SESSION['username'])) {
-    header('Location: login.php');
-    exit();
-}
-
-// Função para adicionar uma avaria ao banco de dados
-function adicionarAvaria($placa, $localizacao, $descricao, $imagem) {
-    global $conn;
-
-    // Prepara e executa a consulta SQL para inserir a avaria
-    $stmt = $conn->prepare("INSERT INTO avarias (placa, localizacao, descricao, imagem) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("ssss", $placa, $localizacao, $descricao, $imagem);
-    $stmt->execute();
-    $stmt->close();
-}
-
-// Função para deletar uma avaria do banco de dados
-function deletarAvaria($id) {
-    global $conn;
-
-    // Prepara e executa a consulta SQL para deletar a avaria
-    $stmt = $conn->prepare("DELETE FROM avarias WHERE id = ?");
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $stmt->close();
-}
-
-// Verifica se o formulário foi enviado
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $placa = $_POST['placa'];
-    $localizacao = $_POST['localizacao'];
-    $descricao = $_POST['avarias'];
-    $imagem = '';
-
-    // Verifica se um arquivo foi enviado
-    if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
-        $imagem = 'uploads/' . basename($_FILES['imagem']['name']);
-        move_uploaded_file($_FILES['imagem']['tmp_name'], $imagem);
+    // Verifica se o usuário está logado, caso contrário, redireciona para a página de login.
+    if (!isset($_SESSION['username'])) {
+        header('Location: login.php');
+        exit();
     }
 
-    adicionarAvaria($placa, $localizacao, $descricao, $imagem);
+    // Função para adicionar uma avaria ao banco de dados
+    function adicionarAvaria($placa, $localizacao, $descricao, $imagem) {
+        global $conn;
 
-    // Redireciona para evitar o reenvio do formulário
-    header('Location: ' . $_SERVER['PHP_SELF']);
-    exit();
-}
+        // Prepara e executa a consulta SQL para inserir a avaria
+        $stmt = $conn->prepare("INSERT INTO avarias (placa, localizacao, descricao, imagem) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("ssss", $placa, $localizacao, $descricao, $imagem);
+        $stmt->execute();
+        $stmt->close();
+    }
 
-// Verifica se uma solicitação de exclusão foi feita
-if (isset($_GET['delete'])) {
-    $id = intval($_GET['delete']);
-    deletarAvaria($id);
-    header('Location: ' . $_SERVER['PHP_SELF']);
-    exit();
-}
+    // Função para deletar uma avaria do banco de dados
+    function deletarAvaria($id) {
+        global $conn;
 
-// Obtém as avarias do banco de dados
-$sql = "SELECT * FROM avarias";
-$result = $conn->query($sql);
+        // Prepara e executa a consulta SQL para deletar a avaria
+        $stmt = $conn->prepare("DELETE FROM avarias WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->close();
+    }
 
-// Obtém as placas dos veículos do banco de dados
-$sql_placas = "SELECT placa FROM carros";
-$result_placas = $conn->query($sql_placas);
+    // Verifica se o formulário foi enviado
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $placa = $_POST['placa'];
+        $localizacao = $_POST['localizacao'];
+        $descricao = $_POST['avarias'];
+        $imagem = '';
+
+        // Verifica se um arquivo foi enviado
+        if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
+            $imagem = 'uploads/' . basename($_FILES['imagem']['name']);
+            move_uploaded_file($_FILES['imagem']['tmp_name'], $imagem);
+        }
+
+        adicionarAvaria($placa, $localizacao, $descricao, $imagem);
+
+        // Redireciona para evitar o reenvio do formulário
+        header('Location: ' . $_SERVER['PHP_SELF']);
+        exit();
+    }
+
+    // Verifica se uma solicitação de exclusão foi feita
+    if (isset($_GET['delete'])) {
+        $id = intval($_GET['delete']);
+        deletarAvaria($id);
+        header('Location: ' . $_SERVER['PHP_SELF']);
+        exit();
+    }
+
+    // Obtém as avarias do banco de dados
+    $sql = "SELECT * FROM avarias";
+    $result = $conn->query($sql);
+
+    // Obtém as placas dos veículos do banco de dados
+    $sql_placas = "SELECT placa FROM carros";
+    $result_placas = $conn->query($sql_placas);
 ?>
 
 <!DOCTYPE html>
@@ -104,11 +104,11 @@ $result_placas = $conn->query($sql_placas);
             <select id="placa" name="placa" required>
                 <option value="">Selecione</option>
                 <?php
-                if ($result_placas->num_rows > 0) {
-                    while ($row = $result_placas->fetch_assoc()) {
-                        echo "<option value='{$row['placa']}'>{$row['placa']}</option>";
+                    if ($result_placas->num_rows > 0) {
+                        while ($row = $result_placas->fetch_assoc()) {
+                            echo "<option value='{$row['placa']}'>{$row['placa']}</option>";
+                        }
                     }
-                }
                 ?>
             </select>
 

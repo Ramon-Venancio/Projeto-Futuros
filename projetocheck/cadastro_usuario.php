@@ -1,27 +1,27 @@
 <?php
-include 'config.php';
+    include 'config.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
 
-    // Prepara e executa a inserção do usuário (sem criptografia)
-    $stmt = $conn->prepare("INSERT INTO usuarios (username, password) VALUES (?, ?)");
-    $stmt->bind_param('ss', $username, $password);
+        // Prepara e executa a inserção do usuário (sem criptografia)
+        $stmt = $conn->prepare("INSERT INTO usuarios (username, password) VALUES (?, ?)");
+        $stmt->bind_param('ss', $username, $password);
 
-    if ($stmt->execute()) {
-        echo "<script>
-                alert('Cadastrado com Sucesso');
-                window.location.href = 'login.php';
-              </script>";
-    } else {
-        echo "<script>alert('Erro ao cadastrar. Por favor, tente novamente.');</script>";
+        if ($stmt->execute()) {
+            echo "<script>
+                    alert('Cadastrado com Sucesso');
+                    window.location.href = 'login.php';
+                </script>";
+        } else {
+            echo "<script>alert('Erro ao cadastrar. Por favor, tente novamente.');</script>";
+        }
+
+        $stmt->close();
     }
 
-    $stmt->close();
-}
-
-$conn->close();
+    $conn->close();
 ?>
 
 <!DOCTYPE html>

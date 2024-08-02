@@ -1,38 +1,38 @@
 <?php
-// Inclui o arquivo de configuração que contém a conexão com o banco de dados
-include 'config.php';
+    // Inclui o arquivo de configuração que contém a conexão com o banco de dados
+    include 'config.php';
 
-// Obtém o ID do produto a ser editado a partir da URL
-$id = $_GET['id'];
+    // Obtém o ID do produto a ser editado a partir da URL
+    $id = $_GET['id'];
 
-// Verifica se o formulário foi enviado usando o método POST
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Obtém os valores do formulário enviados via POST
-    $placa = $_POST['placa'];
-    $modelo = $_POST['modelo'];
-    $marca = $_POST['marca'];
-    $ano = $_POST['ano'];
+    // Verifica se o formulário foi enviado usando o método POST
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // Obtém os valores do formulário enviados via POST
+        $placa = $_POST['placa'];
+        $modelo = $_POST['modelo'];
+        $marca = $_POST['marca'];
+        $ano = $_POST['ano'];
 
-    // Cria a consulta SQL para atualizar os dados do produto
-    $sql = "UPDATE carros SET placa='$placa', modelo='$modelo', marca='$marca', ano='$ano' WHERE id=$id";
-    
-    // Executa a consulta SQL e verifica se a atualização foi bem-sucedida
-    if ($conn->query($sql) === TRUE) {
-        // Redireciona para a página inicial se a atualização foi bem-sucedida
-        header('Location: index.php');
-        exit(); // Encerra o script após o redirecionamento
-    } else {
-        // Exibe uma mensagem de erro se a atualização falhar
-        echo "Erro: " . $conn->error;
+        // Cria a consulta SQL para atualizar os dados do produto
+        $sql = "UPDATE carros SET placa='$placa', modelo='$modelo', marca='$marca', ano='$ano' WHERE id=$id";
+        
+        // Executa a consulta SQL e verifica se a atualização foi bem-sucedida
+        if ($conn->query($sql) === TRUE) {
+            // Redireciona para a página inicial se a atualização foi bem-sucedida
+            header('Location: index.php');
+            exit(); // Encerra o script após o redirecionamento
+        } else {
+            // Exibe uma mensagem de erro se a atualização falhar
+            echo "Erro: " . $conn->error;
+        }
     }
-}
 
-// Cria a consulta SQL para selecionar os dados do produto a ser editado
-$sql = "SELECT * FROM carros WHERE id=$id";
-// Executa a consulta SQL
-$result = $conn->query($sql);
-// Obtém os dados do produto como um array associativo
-$placa = $result->fetch_assoc();
+    // Cria a consulta SQL para selecionar os dados do produto a ser editado
+    $sql = "SELECT * FROM carros WHERE id=$id";
+    // Executa a consulta SQL
+    $result = $conn->query($sql);
+    // Obtém os dados do produto como um array associativo
+    $placa = $result->fetch_assoc();
 ?>
 
 <!DOCTYPE html>

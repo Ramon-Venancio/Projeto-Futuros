@@ -1,28 +1,28 @@
 <?php
-include 'config.php';
+    include 'config.php';
 
-// Inicializa as variáveis de pesquisa
-$search = isset($_POST['search']) ? $_POST['search'] : '';
-$searchType = isset($_POST['search_type']) ? $_POST['search_type'] : '';
+    // Inicializa as variáveis de pesquisa
+    $search = isset($_POST['search']) ? $_POST['search'] : '';
+    $searchType = isset($_POST['search_type']) ? $_POST['search_type'] : '';
 
-// Define a consulta SQL com base na pesquisa
-$sql = "SELECT * FROM carros";
+    // Define a consulta SQL com base na pesquisa
+    $sql = "SELECT * FROM carros";
 
-// Verifica se o botão "Mostrar Todos" foi clicado
-if ($searchType === 'all') {
-    $search = ''; // Reseta a pesquisa
-    $searchType = ''; // Reseta o tipo de pesquisa
-} elseif ($search !== '') {
-    $search = $conn->real_escape_string($search); // Escapa o termo de pesquisa para segurança
-    if ($searchType === 'id') {
-        $sql .= " WHERE id = $search";
-    } else {
-        $sql .= " WHERE placa LIKE '%$search%'";
+    // Verifica se o botão "Mostrar Todos" foi clicado
+    if ($searchType === 'all') {
+        $search = ''; // Reseta a pesquisa
+        $searchType = ''; // Reseta o tipo de pesquisa
+    } elseif ($search !== '') {
+        $search = $conn->real_escape_string($search); // Escapa o termo de pesquisa para segurança
+        if ($searchType === 'id') {
+            $sql .= " WHERE id = $search";
+        } else {
+            $sql .= " WHERE placa LIKE '%$search%'";
+        }
     }
-}
 
-// Executa a consulta SQL no banco de dados e armazena o resultado na variável $result.
-$result = $conn->query($sql);
+    // Executa a consulta SQL no banco de dados e armazena o resultado na variável $result.
+    $result = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -69,23 +69,23 @@ $result = $conn->query($sql);
                 <th>Ações</th>
             </tr>
             <?php
-            if ($result->num_rows > 0) { 
-                while($row = $result->fetch_assoc()) { 
-                    echo "<tr>
-                        <td>{$row['id']}</td>
-                        <td>{$row['placa']}</td>
-                        <td>{$row['modelo']}</td>
-                        <td>{$row['marca']}</td>
-                        <td>{$row['ano']}</td>
-                        <td>
-                            <a href='edit_car.php?id={$row['id']}'>Editar</a> | 
-                            <a href='#' onclick='confirmDelete({$row['id']})'>Excluir</a>
-                        </td>
-                    </tr>";
+                if ($result->num_rows > 0) { 
+                    while($row = $result->fetch_assoc()) { 
+                        echo "<tr>
+                            <td>{$row['id']}</td>
+                            <td>{$row['placa']}</td>
+                            <td>{$row['modelo']}</td>
+                            <td>{$row['marca']}</td>
+                            <td>{$row['ano']}</td>
+                            <td>
+                                <a href='edit_car.php?id={$row['id']}'>Editar</a> | 
+                                <a href='#' onclick='confirmDelete({$row['id']})'>Excluir</a>
+                            </td>
+                        </tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='7'>Nenhum veiculo encontrado</td></tr>";
                 }
-            } else {
-                echo "<tr><td colspan='7'>Nenhum veiculo encontrado</td></tr>";
-            }
             ?>
         </table>
     </main>

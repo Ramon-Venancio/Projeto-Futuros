@@ -1,19 +1,23 @@
 <?php
-// Inclui o arquivo de configuração que deve conter as informações para conectar ao banco de dados.
-include 'config.php';
-session_start();
-    
-// Verifica se o usuário está logado, caso contrário, redireciona para a página de login.
-if (!isset($_SESSION['username'])) {
-    header('Location: login.php');
-    exit();
-}
+    ini_set('display_errors', 1);
+    error_reporting(E_ALL);
 
-// Obter carros - Define a consulta SQL para selecionar todos os produtos da tabela 'carros'.
-$sql = "SELECT * FROM carros";
 
-// Executa a consulta SQL no banco de dados e armazena o resultado na variável $result.
-$result = $conn->query($sql);
+    // Inclui o arquivo de configuração que deve conter as informações para conectar ao banco de dados.
+    include 'config.php';
+    session_start();
+        
+    // Verifica se o usuário está logado, caso contrário, redireciona para a página de login.
+    if (!isset($_SESSION['username'])) {
+        header('Location: login.php');
+        exit();
+    }
+
+    // Obter carros - Define a consulta SQL para selecionar todos os produtos da tabela 'carros'.
+    $sql = "SELECT * FROM carros";
+
+    // Executa a consulta SQL no banco de dados e armazena o resultado na variável $result.
+    $result = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -59,25 +63,25 @@ $result = $conn->query($sql);
                 <th>Ações</th> <!-- Cabeçalho da coluna para ações disponíveis (editar e excluir). -->
             </tr>
             <?php
-            if ($result->num_rows > 0) { // Verifica se a consulta retornou algum resultado.
-                while($row = $result->fetch_assoc()) { // Percorre cada linha do resultado da consulta.
-                    // Cria uma linha da tabela para cada veículo retornado pela consulta.
-                    echo "<tr>
-                        <td>{$row['id']}</td> <!-- Exibe o ID do veículo. -->
-                        <td>{$row['placa']}</td> <!-- Exibe a placa do veículo. -->
-                        <td>{$row['modelo']}</td> <!-- Exibe o modelo do veículo. -->
-                        <td>{$row['marca']}</td> <!-- Exibe a marca do veículo. -->
-                        <td>{$row['ano']}</td> <!-- Exibe o ano do veículo. -->
-                        <td>
-                            <a href='edit_car.php?id={$row['id']}'>Editar</a> | <!-- Link para editar o veículo, passando o ID como parâmetro. -->
-                            <a href='#' onclick='confirmDelete({$row['id']})'>Excluir</a> <!-- Link para excluir o veículo, passando o ID como parâmetro. -->
-                        </td>
-                    </tr>";
+                if ($result->num_rows > 0) { // Verifica se a consulta retornou algum resultado.
+                    while($row = $result->fetch_assoc()) { // Percorre cada linha do resultado da consulta.
+                        // Cria uma linha da tabela para cada veículo retornado pela consulta.
+                        echo "<tr>
+                            <td>{$row['id']}</td> <!-- Exibe o ID do veículo. -->
+                            <td>{$row['placa']}</td> <!-- Exibe a placa do veículo. -->
+                            <td>{$row['modelo']}</td> <!-- Exibe o modelo do veículo. -->
+                            <td>{$row['marca']}</td> <!-- Exibe a marca do veículo. -->
+                            <td>{$row['ano']}</td> <!-- Exibe o ano do veículo. -->
+                            <td>
+                                <a href='edit_car.php?id={$row['id']}'>Editar</a> | <!-- Link para editar o veículo, passando o ID como parâmetro. -->
+                                <a href='#' onclick='confirmDelete({$row['id']})'>Excluir</a> <!-- Link para excluir o veículo, passando o ID como parâmetro. -->
+                            </td>
+                        </tr>";
+                    }
+                } else {
+                    // Se nenhum veículo for encontrado, exibe uma mensagem na tabela.
+                    echo "<tr><td colspan='6'>Nenhum veículo encontrado</td></tr>";
                 }
-            } else {
-                // Se nenhum veículo for encontrado, exibe uma mensagem na tabela.
-                echo "<tr><td colspan='6'>Nenhum veículo encontrado</td></tr>";
-            }
             ?>
         </table>
     </main>

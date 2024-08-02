@@ -1,40 +1,40 @@
 <?php
-// Inclui o arquivo de configuração para conectar ao banco de dados
-include 'config.php';
+    // Inclui o arquivo de configuração para conectar ao banco de dados
+    include 'config.php';
 
-// Verifica se o método de requisição é POST
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $placa = $_POST['placa'];
-    $modelo = $_POST['modelo'];
-    $marca = $_POST['marca'];
-    $ano = $_POST['ano'];
+    // Verifica se o método de requisição é POST
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $placa = $_POST['placa'];
+        $modelo = $_POST['modelo'];
+        $marca = $_POST['marca'];
+        $ano = $_POST['ano'];
 
-    // Prepara a consulta SQL para inserir um novo veículo na tabela 'carros'
-    $stmt = $conn->prepare("INSERT INTO carros (placa, modelo, marca, ano) VALUES (?, ?, ?, ?)");
-    if ($stmt) {
-        // Liga as variáveis aos parâmetros da consulta
-        $stmt->bind_param("ssss", $placa, $modelo, $marca, $ano);
-        
-        // Executa a consulta SQL e verifica se foi bem-sucedida
-        if ($stmt->execute()) {
-            // Redireciona para a página inicial se a inserção foi bem-sucedida
-            header('Location: index.php');
-            exit(); // Encerra o script após o redirecionamento
+        // Prepara a consulta SQL para inserir um novo veículo na tabela 'carros'
+        $stmt = $conn->prepare("INSERT INTO carros (placa, modelo, marca, ano) VALUES (?, ?, ?, ?)");
+        if ($stmt) {
+            // Liga as variáveis aos parâmetros da consulta
+            $stmt->bind_param("ssss", $placa, $modelo, $marca, $ano);
+            
+            // Executa a consulta SQL e verifica se foi bem-sucedida
+            if ($stmt->execute()) {
+                // Redireciona para a página inicial se a inserção foi bem-sucedida
+                header('Location: index.php');
+                exit(); // Encerra o script após o redirecionamento
+            } else {
+                // Exibe uma mensagem de erro se a inserção falhar
+                echo "Erro: " . $stmt->error;
+            }
+            
+            // Fecha a consulta preparada
+            $stmt->close();
         } else {
-            // Exibe uma mensagem de erro se a inserção falhar
-            echo "Erro: " . $stmt->error;
+            // Exibe uma mensagem de erro se a preparação da consulta falhar
+            echo "Erro: " . $conn->error;
         }
-        
-        // Fecha a consulta preparada
-        $stmt->close();
-    } else {
-        // Exibe uma mensagem de erro se a preparação da consulta falhar
-        echo "Erro: " . $conn->error;
     }
-}
 
-// Fecha a conexão com o banco de dados
-$conn->close();
+    // Fecha a conexão com o banco de dados
+    $conn->close();
 ?>
 
 <!DOCTYPE html>

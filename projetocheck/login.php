@@ -1,41 +1,41 @@
 <?php
-include 'config.php';
-session_start();
+    include 'config.php';
+    session_start();
 
-if (isset($_SESSION['username'])) {
-    header('Location: index.php');
-    exit();
-}
-
-$error = '';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    $stmt = $conn->prepare("SELECT password FROM usuarios WHERE username = ?");
-    $stmt->bind_param('s', $username);
-    $stmt->execute();
-    $stmt->store_result();
-    $stmt->bind_result($stored_password);
-
-    if ($stmt->num_rows === 1) {
-        $stmt->fetch();
-        if ($password === $stored_password) {
-            $_SESSION['username'] = $username;
-            header('Location: index.php');
-            exit();
-        } else {
-            $error = 'Usuário ou senha incorretos.';
-        }
-    } else {
-        $error = 'Usuário não encontrado.';
+    if (isset($_SESSION['username'])) {
+        header('Location: index.php');
+        exit();
     }
 
-    $stmt->close();
-}
+    $error = '';
 
-$conn->close();
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+
+        $stmt = $conn->prepare("SELECT password FROM usuarios WHERE username = ?");
+        $stmt->bind_param('s', $username);
+        $stmt->execute();
+        $stmt->store_result();
+        $stmt->bind_result($stored_password);
+
+        if ($stmt->num_rows === 1) {
+            $stmt->fetch();
+            if ($password === $stored_password) {
+                $_SESSION['username'] = $username;
+                header('Location: index.php');
+                exit();
+            } else {
+                $error = 'Usuário ou senha incorretos.';
+            }
+        } else {
+            $error = 'Usuário não encontrado.';
+        }
+
+        $stmt->close();
+    }
+
+    $conn->close();
 ?>
 
 <!DOCTYPE html>

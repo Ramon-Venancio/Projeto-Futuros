@@ -1,20 +1,19 @@
 <?php
+    include 'config.php';
 
-include 'config.php';
+    $id = $_GET['id'];
 
-$id = $_GET['id'];
-
-$sql = "DELETE FROM carros WHERE id=$id";
+    $sql = "DELETE FROM carros WHERE id=$id";
 
 
-if ($conn->query($sql) === TRUE) {
-   
-    header('Location: index.php');
-    exit(); 
-} else {
+    if ($conn->query($sql) === TRUE) {
     
-    echo "Erro: " . $conn->error;
-}
+        header('Location: index.php');
+        exit(); 
+    } else {
+        
+        echo "Erro: " . $conn->error;
+    }
 
-$conn->close();
+    $conn->close();
 ?>
