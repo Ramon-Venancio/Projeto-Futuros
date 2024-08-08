@@ -90,12 +90,16 @@
         <h1>Sistema de Checklist Veicular</h1> 
     </header>
     <nav>
-        <a href="index.php">Home</a> 
-        <a href="add_car.php">Cadastro de Veículos</a>
-        <a href="avarias.php">Avarias de Veículos</a>
-        <a href="lista_avarias.php">Lista de Avarias</a>
-        <a href="pesquisa.php">Pesquisa</a> 
-        <a href="logout.php">Sair</a> <!-- Botão de logout -->
+        <ul>
+            <a href="index.php">Home</a>
+            <a href="add_car.php">Cadastro de Veículos</a>
+            <a href="checklist.php">Checklist</a>
+            <a href="lista_checklist.php">Ver Checklists</a>
+            <a href="avarias.php">Cadastro de Avarias</a>
+            <a href="lista_avarias.php">Lista de Avarias</a>
+            <a href="pesquisa.php">Pesquisa</a>
+            <a href="logout.php">Sair</a> <!-- Botão de logout -->
+        </ul>
     </nav>
     <main>
         <h2>Lista de Avarias</h2>
@@ -118,8 +122,11 @@
                                 <td>{$row['localizacao']}</td>
                                 <td>{$row['descricao']}</td>
                                 <td>" . (!empty($row['imagem']) ? "<img src='{$row['imagem']}' alt='Imagem da avaria' width='100'>" : "Nenhuma imagem") . "</td>
-                                <td>{$row['criado_em']}</td>
-                                <td><button onclick='confirmDelete({$row['id']})'>Excluir</button></td>
+                                <td>" . date('d/m/Y', strtotime($row['criado_em'])) . "</td>
+                                <td>
+                                    <a href='editar_avaria.php?id={$row['id']}'>Editar</a>
+                                    <a href='#' onclick='confirmDelete({$row['id']})'>Excluir</a>
+                                </td>
                             </tr>";
                     }
                 } else {

@@ -38,12 +38,16 @@
         <h1>Sistema de Checklist Veicular</h1> 
     </header>
     <nav>
-        <a href="index.php">Home</a> 
-        <a href="add_car.php">Cadastro de Veiculos</a>
-        <a href="avarias.php">Avarias de Veículos</a>
+    <ul>
+        <a href="index.php">Home</a>
+        <a href="add_car.php">Cadastro de Veículos</a>
+        <a href="checklist.php">Checklist</a>
+        <a href="lista_checklist.php">Ver Checklists</a>
+        <a href="avarias.php">Cadastro de Avarias</a>
         <a href="lista_avarias.php">Lista de Avarias</a>
-        <a href="pesquisa.php">Pesquisa</a> 
+        <a href="pesquisa.php">Pesquisa</a>
         <a href="logout.php">Sair</a> <!-- Botão de logout -->
+    </ul>
     </nav>
     <main>
         <h2>Lista de Veiculos</h2>

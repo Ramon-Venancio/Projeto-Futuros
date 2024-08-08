@@ -18,7 +18,7 @@ body {
 }
 
 main {
-    flex: 1;
+    flex: 1;    
     padding: 2rem;
 }
 
@@ -74,6 +74,7 @@ nav a:hover {
 
 h1, h2 {
     color: #003a69;
+    text-align: center;
 }
 
 h1 a {
@@ -88,6 +89,7 @@ form {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 500px;
     margin: 20px auto;
+    
 }
 
 form div {
@@ -139,6 +141,29 @@ form input[type="submit"]:hover {
 
 .botoes button:hover {
     transform: scale(1.05);
+}
+
+.checklist-item {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fafafa;
+}
+
+.checklist-item label {
+    font-weight: bold;
+    font-size: larger;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.item p {
+    width: 200px;
 }
 
 footer {
