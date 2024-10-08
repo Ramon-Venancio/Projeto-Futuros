@@ -56,3 +56,32 @@ export const atualizarVeiculo = async (req, res) => {
         res.status(500).json({ error: 'Erro ao atualizar veículo' })
     }
 }
+
+export const deletarVeiculo = async (req, res) => {
+    try {
+        const id = parseInt(req.params.id)
+        
+        let veiculos = await listarVeiculos()
+        const index = veiculos.findIndex(v => v.id === id)
+    
+        if (index === -1) {
+            return res.status(404).json({ error: 'Veiculo não encontrado' })
+        }
+    
+
+        const veiculoRemovido = veiculos.splice(index,1)
+    
+        await salvarVeiculos(veiculos)
+        res.json(veiculoRemovido)
+    } catch (error) {
+        res.status(500).json({ error: 'Erro ao deletar veiculo' })
+    }
+}
+
+export const deletarVeiculos = async (req, res) => {
+    let veiculos = await listarVeiculos()
+
+    veiculos.length = 0
+
+    await salvarVeiculos(veiculos)
+}

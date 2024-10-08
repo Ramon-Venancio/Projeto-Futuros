@@ -1,16 +1,1 @@
-[
-  {
-    "modelo": "Fiat Uno",
-    "placa": "ABC-1234",
-    "ano": 2015,
-    "ultima_manutencao": "2023-09-10",
-    "id": 1
-  },
-  {
-    "modelo": "Ford Ka",
-    "placa": "DEF-5678",
-    "ano": 2018,
-    "ultima_manutencao": "2023-09-20",
-    "id": 2
-  }
-]
+[]

@@ -22,8 +22,16 @@ export const adicionarVeiculo = async (novoVeiculo) => {
         const dados = await fs.promises.readFile(caminhoArquivo, 'utf8')
         const veiculos = JSON.parse(dados)
 
-        novoVeiculo.id = veiculos.length + 1;
-        veiculos.push(novoVeiculo)
+        if (veiculos.length === 0) {
+            novoVeiculo.id = veiculos.length + 1;
+            veiculos.push(novoVeiculo)
+        } else {
+            const maiorID = veiculos.reduce((maior,atual) => {
+                return atual.id > maior ? atual.id : maior
+            }, 0)
+            novoVeiculo.id = maiorID + 1
+            veiculos.push(novoVeiculo)
+        }
 
         await fs.promises.writeFile(caminhoArquivo, JSON.stringify(veiculos, null, 2))
         return novoVeiculo
