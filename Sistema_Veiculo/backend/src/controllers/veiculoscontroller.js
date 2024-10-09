@@ -79,9 +79,14 @@ export const deletarVeiculo = async (req, res) => {
 }
 
 export const deletarVeiculos = async (req, res) => {
-    let veiculos = await listarVeiculos()
-
-    veiculos.length = 0
-
-    await salvarVeiculos(veiculos)
+    try {
+        let veiculos = await listarVeiculos()
+    
+        veiculos.length = 0
+    
+        await salvarVeiculos(veiculos)
+        res.json('Banco de dados deletado com sucesso.')
+    } catch (error) {
+        res.status(500).json({ error: 'Erro ao deletar o banco de dados'})
+    }
 }
