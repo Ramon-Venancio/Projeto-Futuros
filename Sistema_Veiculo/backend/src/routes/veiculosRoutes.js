@@ -1,16 +1,16 @@
 import {Router} from 'express'
-import { obterVeiculos, criarVeiculo, obterVeiculoPorId, atualizarVeiculo, deletarVeiculo, deletarVeiculos } from '../controllers/veiculosController.js'
+import veiculosController from '../controllers/veiculosController.js'
 
 const router = Router()
 
-router.get('/', obterVeiculos)
-router.get('/:id', obterVeiculoPorId)
+router.get('/', veiculosController.index)
+router.get('/:id', veiculosController.indexID)
 
-router.post('/', criarVeiculo)
+router.post('/', veiculosController.create)
 
-router.put('/:id', atualizarVeiculo)
+router.put('/:id', veiculosController.update)
 
-router.delete('/:id', deletarVeiculo)
-router.delete('/', deletarVeiculos)
+router.delete('/', veiculosController.delete)
+router.delete('/:id', veiculosController.deleteID)
 
 export default router

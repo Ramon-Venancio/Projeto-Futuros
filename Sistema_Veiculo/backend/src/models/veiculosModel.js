@@ -12,32 +12,8 @@ export const listarVeiculos = async () => {
         const dados = await fs.promises.readFile(caminhoArquivo, 'utf8')
         return JSON.parse(dados)
     } catch (error) {
-        console.error(`Erro ai ler o arquivo de veiculos: ${error}`)
+        console.error(`Erro ao ler o arquivo de veículos: ${error}`)
         return []
-    }
-}
-
-export const adicionarVeiculo = async (novoVeiculo) => {
-    try {
-        const dados = await fs.promises.readFile(caminhoArquivo, 'utf8')
-        const veiculos = JSON.parse(dados)
-
-        if (veiculos.length === 0) {
-            novoVeiculo.id = veiculos.length + 1;
-            veiculos.push(novoVeiculo)
-        } else {
-            const maiorID = veiculos.reduce((maior,atual) => {
-                return atual.id > maior ? atual.id : maior
-            }, 0)
-            novoVeiculo.id = maiorID + 1
-            veiculos.push(novoVeiculo)
-        }
-
-        await fs.promises.writeFile(caminhoArquivo, JSON.stringify(veiculos, null, 2))
-        return novoVeiculo
-    } catch (error) {
-        console.error(`Erro ao salvar o veículo: ${error}`)
-        throw new Error('Erro ao salvar o veículo')
     }
 }
 
