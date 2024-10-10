@@ -1,1 +1,30 @@
-[]
+[
+  {
+    "modelo": "Fiat Uno",
+    "placa": "UNO-1234",
+    "ano": 2017,
+    "ultima_manutencao": "2020-09-13",
+    "id": 1
+  },
+  {
+    "modelo": "MIUWIN",
+    "placa": "MIU-1234",
+    "ano": 2015,
+    "ultima_manutencao": "2010-09-13",
+    "id": 2
+  },
+  {
+    "modelo": "Fiat Uno",
+    "placa": "JKL-2134",
+    "ano": 2018,
+    "ultima_manutencao": "2020-10-13",
+    "id": 3
+  },
+  {
+    "modelo": "MIUWIN",
+    "placa": "MKT-2134",
+    "ano": 2018,
+    "ultima_manutencao": "2020-10-13",
+    "id": 4
+  }
+]

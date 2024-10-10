@@ -9,17 +9,39 @@ const veiculosController = {
             res.status(500).json({ error: 'Erro ao listar veículos' })
         }
     },
-    indexID: async (req, res) => {
+    indexFind: async (req, res) => {
         try {
-            const id = parseInt(req.params.id)
+            const parametro = req.params.parametro
             const veiculos = await listarVeiculos()
-            const veiculo = veiculos.find(v => v.id === id)
-    
-            if (!veiculo) {
-                return res.status(400).json({ error: 'Veículo não encontrado' })
+
+            if (!isNaN(parametro)) {
+                const id = parseInt(parametro)
+                const veiculo = veiculos.find(v => v.id === id)
+                if (!veiculo) {
+                    return res.status(400).json({ error: 'Veículo não encontrado' })
+                }
+
+                res.json(veiculo)
+            }
+            else if (/^[A-Z]{3}-\d{4}$/.test(parametro.toUpperCase())) {
+                const placa = parametro.toUpperCase();
+                const veiculo = veiculos.find(veiculo => veiculo.placa === placa);
+                if (!veiculo) {
+                    return res.status(400).json({ error: 'Veículo não encontrado' })
+                }
+
+                res.json(veiculo)
+            }
+            else {
+                const modelo = parametro.toLowerCase();
+                const veiculosModelo = veiculos.filter(veiculo => veiculo.modelo.toLowerCase() === modelo)
+                if (!veiculosModelo) {
+                    return res.status(400).json({ error: 'Veículo não encontrado' })
+                }
+
+                res.json(veiculosModelo)
             }
     
-            res.json(veiculo)
         } catch (error) {
             res.status(500).json({ error: 'Erro ao listar veículo' })
         }

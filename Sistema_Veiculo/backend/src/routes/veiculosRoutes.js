@@ -4,7 +4,7 @@ import veiculosController from '../controllers/veiculosController.js'
 const router = Router()
 
 router.get('/', veiculosController.index)
-router.get('/:id', veiculosController.indexID)
+router.get('/:parametro', veiculosController.indexFind)
 
 router.post('/', veiculosController.create)
 
