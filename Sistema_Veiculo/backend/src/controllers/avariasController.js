@@ -28,14 +28,14 @@ const avariasController = {
      create: async (req, res) => {
           try {
                const novaAvaria = req.body
-               const idVeiculo = paserInt(req.params.id)
+               const idVeiculo = parseInt(req.params.id)
                const veiculos = await listarVeiculos()
                const avarias = await listarAvarias()
 
                const verificacaoVeiculo = veiculos.some(v => v.id === idVeiculo)
 
                if (!verificacaoVeiculo) {
-                    return res.status(404).json({ error: 'Veiculo não existente no banco' })
+                    return res.status(404).json({ error: 'Veiculo não existente nos dados!' })
                }
 
                if (avarias.length === 0) {
@@ -44,7 +44,7 @@ const avariasController = {
                } else {
                     const maiorID = avarias.reduce((maior, atual) => {
                          return atual.id > maior ? atual.id : maior
-                    , 0})
+                    }, 0)
                     novaAvaria.id = maiorID + 1
                     avarias.push(novaAvaria)
                }
@@ -61,7 +61,7 @@ const avariasController = {
                const novosDados = req.body
 
                let avarias = await listarAvarias()
-               const index = avarias;findIndex(a => a.id === id)
+               const index = avarias.findIndex(a => a.id === id)
 
                if (index === -1) {
                     return res.status(404).json({ error: 'Avaria não encontrada' })
@@ -77,11 +77,11 @@ const avariasController = {
      },
      delete: async (req, res) => {
           try {
-               let veiculos = await listarVeiculos()
+               let avarias = await listarAvarias()
           
-               veiculos.length = 0
+               avarias.length = 0
           
-               await salvarVeiculos(veiculos)
+               await salvarAvarias(avarias)
                res.json('Banco de dados deletado com sucesso.')
           } catch (error) {
                res.status(500).json({ error: 'Erro ao deletar o banco de dados'})
@@ -91,20 +91,19 @@ const avariasController = {
           try {
               const id = parseInt(req.params.id)
               
-              let veiculos = await listarVeiculos()
-              const index = veiculos.findIndex(v => v.id === id)
+              let avarias = await listarAvarias()
+              const index = avarias.findIndex(a => a.id === id)
           
               if (index === -1) {
-                  return res.status(404).json({ error: 'Veiculo não encontrado' })
+                  return res.status(404).json({ error: 'avaria não encontrado' })
               }
           
-      
-              const veiculoRemovido = veiculos.splice(index,1)
+              const avariaRemovida = avarias.splice(index,1)
           
-              await salvarVeiculos(veiculos)
-              res.json(veiculoRemovido)
+              await salvarAvarias(avarias)
+              res.json(avariaRemovida)
           } catch (error) {
-              res.status(500).json({ error: 'Erro ao deletar veiculo' })
+              res.status(500).json({ error: 'Erro ao deletar avaria' })
           }
      }
 }

@@ -4,7 +4,7 @@ import avariasController from '../controllers/avariasController.js'
 const router = Router()
 
 router.get('/', avariasController.index)
-router.get('/:parametro', avariasController.indexID)
+router.get('/:id', avariasController.indexID)
 
 router.post('/:id', avariasController.create)
 
