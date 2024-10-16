@@ -39,7 +39,7 @@ const avariasController = {
             }
 
             if (avarias.length === 0) {
-                novaAvaria.id = avarias.length + 1
+                novaAvaria.id = 1
                 avarias.push(novaAvaria)
             } else {
                 const maiorID = avarias.reduce((maior, atual) => {

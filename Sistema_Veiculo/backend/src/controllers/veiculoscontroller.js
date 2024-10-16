@@ -52,7 +52,7 @@ const veiculosController = {
             const veiculos = await listarVeiculos()
 
             if (veiculos.length === 0) {
-                novoVeiculo.id = veiculos.length + 1;
+                novoVeiculo.id = 1
                 veiculos.push(novoVeiculo)
             } else {
                 const maiorID = veiculos.reduce((maior,atual) => {

@@ -1,9 +1,6 @@
 import { listarUsuarios, salvarUsuarios } from "../models/usuariosModel.js"
 import jwt from 'jsonwebtoken'
 
-const tokens = {}
-secretKey = 'Pudim Amassado'
-
 const usersController = {
     index: async (req, res) => {
         try {
@@ -57,7 +54,7 @@ const usersController = {
     },
     update: async (req, res) => {
         try {
-            const id = req.params.id
+            const id = parseInt(req.params.id)
             const novosDados = req.body
             const usuarios = await listarUsuarios()
             const index = usuarios.findIndex(u => u.id === id)
@@ -71,7 +68,7 @@ const usersController = {
             await salvarUsuarios(usuarios)
             res.json(usuarios[index])
         } catch (error) {
-            res.status(500).json({ error: 'Erro ao atualizar veículo' })
+            res.status(500).json({ error: 'Erro ao atualizar usuário' })
         }
     },
     delete: async (req, res) => {
@@ -106,25 +103,26 @@ const usersController = {
     },
     login: async (req, res) => {
         try {
-            const {username, email, password} = req.body
+            const { username, email, password } = req.body
             const usuarios = await listarUsuarios()
             const usuario = usuarios.find(u => u.username === username && u.email === email && u.password === password)
-
+    
             if (!usuario) {
-                return res.status(401).json({ error: 'Credenciais inválidas'})
+                return res.status(401).json({ error: 'Credenciais inválidas' })
             }
-            
-            const token = jwt.sign({id: usuario.id, email: usuario.email}. secretKey, {expiresIn: '1h'})
-
-            tokens[usuario.id] = token
-
-            res.json('login realizado com sucesso!')
+    
+            // Gera o token JWT
+            const token = jwt.sign(
+                { id: usuario.id, email: usuario.email }, // Payload: dados do usuário
+                process.env.JWT_SECRET, // Chave secreta
+                { expiresIn: '1h' } // Token válido por 1 hora
+            )
+    
+            // Envia o token para o cliente
+            res.json({ message: 'Login realizado com sucesso!', token })
         } catch (error) {
-            res.status(500).json({ error: 'Erro ao tentar logar' });
+            res.status(500).json({ error: 'Erro ao tentar logar' })
         }
-    },
-    getTokens: (req, res) => {
-        res.json(tokens)
     }
 }
 
