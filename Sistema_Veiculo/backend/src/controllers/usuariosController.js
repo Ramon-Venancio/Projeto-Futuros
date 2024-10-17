@@ -27,22 +27,38 @@ const usersController = {
     },
     create: async (req, res) => {
         try {
-            const novoUsuario = req.body
+            const { username, password, email, role } = req.body
             const usuarios = await listarUsuarios()
             const usuarioExistente = usuarios.find(user => user.email === novoUsuario.email)
+
+            if(role === 'admin' && req.user.role !== 'admin') {
+                return res.status(403).json({ error: 'Acesso negado. Apenas administradores podem criar contas de administrador.' })
+            }
 
             if (usuarioExistente) {
                 return res.status(409).json({ error: 'Usuário já existente' })
             }
 
             if (usuarios.length === 0) {
-                novoUsuario.id = 1
+                novoUsuario = {
+                    id: 1,
+                    username: username,
+                    password: password,
+                    email: email,
+                    role: role
+                }
             } else {
                 const maiorID = usuarios.reduce((maior, atual) => {
                     return atual.id > maior ? atual.id : maior
                 }, 0);
 
-                novoUsuario.id = maiorID + 1
+                novoUsuario = {
+                    id: maiorID + 1,
+                    username: username,
+                    password: password,
+                    email: email,
+                    role: role
+                }
             }
 
             usuarios.push(novoUsuario)
@@ -113,13 +129,13 @@ const usersController = {
     
             // Gera o token JWT
             const token = jwt.sign(
-                { id: usuario.id, email: usuario.email }, // Payload: dados do usuário
+                { id: usuario.id, email: usuario.email, role: usuario.role }, // Payload: dados do usuário
                 process.env.JWT_SECRET, // Chave secreta
                 { expiresIn: '1h' } // Token válido por 1 hora
             )
     
             // Envia o token para o cliente
-            res.json({ message: 'Login realizado com sucesso!', token })
+            res.json({ token, message: 'Login realizado com sucesso!' })
         } catch (error) {
             res.status(500).json({ error: 'Erro ao tentar logar' })
         }
