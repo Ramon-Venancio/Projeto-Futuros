@@ -1,18 +1,19 @@
 import { Router } from 'express'
 import usersController from '../controllers/usuariosController.js'
 import verificaToken from '../middleware/verificarToken.js'
+import verficaAdmin from '../middleware/verificarAdmin.js'
 
 const router = Router()
 
-router.get("/", verificaToken, usersController.index)
-router.get("/:id", verificaToken, usersController.indexID)
+router.get("/", verificaToken, verficaAdmin, usersController.index)
+router.get("/:id", verificaToken, verficaAdmin, usersController.indexID)
 
-router.post("/", usersController.create)
+router.post("/", verficaAdmin, usersController.create)
 router.post("/login", usersController.login)
 
-router.put("/:id", verificaToken, usersController.update)
+router.put("/:id", verificaToken, verficaAdmin, usersController.update)
 
-router.delete("/", verificaToken, usersController.delete)
-router.delete("/:id", verificaToken, usersController.deleteID)
+router.delete("/", verificaToken, verficaAdmin, usersController.delete)
+router.delete("/:id", verificaToken, verficaAdmin, usersController.deleteID)
 
 export default router

@@ -31,7 +31,8 @@ const usersController = {
             const usuarios = await listarUsuarios()
             const usuarioExistente = usuarios.find(user => user.email === novoUsuario.email)
 
-            if(role === 'admin' && req.user.role !== 'admin') {
+            // Verifica se está tentando criar uma conta admin sem ser admin
+            if (role === 'admin' && req.user.role !== 'admin') {
                 return res.status(403).json({ error: 'Acesso negado. Apenas administradores podem criar contas de administrador.' })
             }
 
@@ -62,8 +63,10 @@ const usersController = {
             }
 
             usuarios.push(novoUsuario)
+
             await salvarUsuarios(usuarios)
-            res.status(201).json(novoUsuario)
+
+            res.status(201).json({message: 'Usuário criado com sucesso!', usuario: novoUsuario})
         } catch (error) {
             res.status(500).json({ error: 'Erro ao adicionar usuário' })
         }
@@ -82,7 +85,8 @@ const usersController = {
             usuarios[index] = { ...usuarios[index], ...novosDados }
 
             await salvarUsuarios(usuarios)
-            res.json(usuarios[index])
+
+            res.json({message: 'Alteração feita com sucesso!', usuario: usuarios[index]})
         } catch (error) {
             res.status(500).json({ error: 'Erro ao atualizar usuário' })
         }
@@ -94,6 +98,7 @@ const usersController = {
             usuarios.length = 0
 
             await salvarUsuarios(usuarios)
+
             res.json('Banco de dados deletado com sucesso!')
         } catch (error) {
             res.status(500).json({ error: 'Erro ao deletar o banco de dados' })
@@ -112,7 +117,8 @@ const usersController = {
             const usuarioRemovido = usuarios.splice(index, 1)
 
             await salvarUsuarios(usuarios)
-            res.json(usuarioRemovido)
+
+            res.json({message: 'Usuário deletado com sucesso!',usuario: usuarioRemovido})
         } catch (error) {
             res.status(500).json({ error: 'Erro ao deletar usuário' })
         }
@@ -131,7 +137,7 @@ const usersController = {
             const token = jwt.sign(
                 { id: usuario.id, email: usuario.email, role: usuario.role }, // Payload: dados do usuário
                 process.env.JWT_SECRET, // Chave secreta
-                { expiresIn: '1h' } // Token válido por 1 hora
+                { expiresIn: '7d' } // Token válido por 7 dias
             )
     
             // Envia o token para o cliente
