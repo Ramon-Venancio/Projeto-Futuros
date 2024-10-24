@@ -25,42 +25,50 @@ const usersController = {
             res.status(500).json({ error: 'Erro ao procurar usuário' })
         }
     },
-    create: async (req, res) => {
+    createFuncionario: async (req, res) => {
         try {
-            const { username, password, email, role } = req.body
+            const { username, password, email } = req.body
             const usuarios = await listarUsuarios()
-            const usuarioExistente = usuarios.find(user => user.email === novoUsuario.email)
-
-            // Verifica se está tentando criar uma conta admin sem ser admin
-            if (role === 'admin' && req.user.role !== 'admin') {
-                return res.status(403).json({ error: 'Acesso negado. Apenas administradores podem criar contas de administrador.' })
-            }
+            const usuarioExistente = usuarios.find(user => user.email === email)
 
             if (usuarioExistente) {
                 return res.status(409).json({ error: 'Usuário já existente' })
             }
 
-            if (usuarios.length === 0) {
-                novoUsuario = {
-                    id: 1,
-                    username: username,
-                    password: password,
-                    email: email,
-                    role: role
-                }
-            } else {
-                const maiorID = usuarios.reduce((maior, atual) => {
-                    return atual.id > maior ? atual.id : maior
-                }, 0);
+            const novoUsuario = {
+                id: usuarios.length > 0 ? usuarios[usuarios.length - 1].id + 1 : 1,
+                username,
+                password,
+                email,
+                role: "funcionario"
+            };
 
-                novoUsuario = {
-                    id: maiorID + 1,
-                    username: username,
-                    password: password,
-                    email: email,
-                    role: role
-                }
+            usuarios.push(novoUsuario)
+
+            await salvarUsuarios(usuarios)
+
+            res.status(201).json({message: 'Usuário criado com sucesso!', usuario: novoUsuario})
+        } catch (error) {
+            res.status(500).json({ error: 'Erro ao adicionar usuário' })
+        }
+    },
+    createAdmin: async (req, res) => {
+        try {
+            const { username, password, email } = req.body
+            const usuarios = await listarUsuarios()
+            const usuarioExistente = usuarios.find(user => user.email === email)
+
+            if (usuarioExistente) {
+                return res.status(409).json({ error: 'Usuário já existente' })
             }
+
+            const novoUsuario = {
+                id: usuarios.length > 0 ? usuarios[usuarios.length - 1].id + 1 : 1,
+                username,
+                password,
+                email,
+                role: "admin"
+            };
 
             usuarios.push(novoUsuario)
 
@@ -139,7 +147,10 @@ const usersController = {
                 process.env.JWT_SECRET, // Chave secreta
                 { expiresIn: '7d' } // Token válido por 7 dias
             )
-    
+
+            req.user = usuario
+
+            console.log(req.user)
             // Envia o token para o cliente
             res.json({ token, message: 'Login realizado com sucesso!' })
         } catch (error) {

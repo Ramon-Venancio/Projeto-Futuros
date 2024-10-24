@@ -51,16 +51,10 @@ const veiculosController = {
             const novoVeiculo = req.body
             const veiculos = await listarVeiculos()
 
-            if (veiculos.length === 0) {
-                novoVeiculo.id = 1
-                veiculos.push(novoVeiculo)
-            } else {
-                const maiorID = veiculos.reduce((maior,atual) => {
-                    return atual.id > maior ? atual.id : maior
-                }, 0)
-                novoVeiculo.id = maiorID + 1
-                veiculos.push(novoVeiculo)
-            }
+
+            const novaPropriedade = {id: veiculos.length > 0 ? veiculos[veiculos.length - 1].id + 1 : 1}
+            novoVeiculo = {...novaPropriedade, ...novoVeiculo}
+            console.log(novoVeiculo)
 
             await salvarVeiculos(veiculos)
             res.status(201).json(novoVeiculo)

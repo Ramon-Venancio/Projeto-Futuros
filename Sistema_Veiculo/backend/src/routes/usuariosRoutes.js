@@ -8,7 +8,8 @@ const router = Router()
 router.get("/", verificaToken, verficaAdmin, usersController.index)
 router.get("/:id", verificaToken, verficaAdmin, usersController.indexID)
 
-router.post("/", verficaAdmin, usersController.create)
+router.post("/", usersController.createFuncionario)
+router.post("/admin", verificaToken, verficaAdmin, usersController.createAdmin)
 router.post("/login", usersController.login)
 
 router.put("/:id", verificaToken, verficaAdmin, usersController.update)

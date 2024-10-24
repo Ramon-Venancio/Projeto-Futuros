@@ -1,1 +1,37 @@
-[]
+[
+  {
+    "id": 1,
+    "username": "admin",
+    "password": 1234,
+    "email": "admin@example.com",
+    "role": "admin"
+  },
+  {
+    "id": 2,
+    "username": "Vinan",
+    "password": 1234,
+    "email": "vinan@gmail.com",
+    "role": "funcionario"
+  },
+  {
+    "id": 3,
+    "username": "Gabriel",
+    "password": 5678,
+    "email": "gabrielzin@gmail.com",
+    "role": "funcionario"
+  },
+  {
+    "id": 4,
+    "username": "Lucas",
+    "password": 9870,
+    "email": "lucosdogral@gmail.com",
+    "role": "admin"
+  },
+  {
+    "id": 5,
+    "username": "Pedro",
+    "password": 9870,
+    "email": "PedrindoGral@gmail.com",
+    "role": "funcionario"
+  }
+]
