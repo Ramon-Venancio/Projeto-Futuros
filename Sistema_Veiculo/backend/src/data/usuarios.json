@@ -15,16 +15,16 @@
   },
   {
     "id": 3,
-    "username": "Gabriel",
-    "password": 5678,
-    "email": "gabrielzin@gmail.com",
+    "username": "Bielzin",
+    "password": 7890,
+    "email": "Bielzindaplay@gatuno.com",
     "role": "funcionario"
   },
   {
     "id": 4,
-    "username": "Lucas",
-    "password": 9870,
-    "email": "lucosdogral@gmail.com",
+    "username": "Lucinhas",
+    "password": 4567,
+    "email": "lucascareca@gmail.com",
     "role": "admin"
   },
   {

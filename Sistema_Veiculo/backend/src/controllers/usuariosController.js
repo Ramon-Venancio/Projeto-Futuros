@@ -148,9 +148,6 @@ const usersController = {
                 { expiresIn: '7d' } // Token válido por 7 dias
             )
 
-            req.user = usuario
-
-            console.log(req.user)
             // Envia o token para o cliente
             res.json({ token, message: 'Login realizado com sucesso!' })
         } catch (error) {

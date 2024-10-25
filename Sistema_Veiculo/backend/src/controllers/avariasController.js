@@ -27,7 +27,7 @@ const avariasController = {
     },
     create: async (req, res) => {
         try {
-            const novaAvaria = req.body
+            let novaAvaria = req.body
             const idVeiculo = parseInt(req.params.id)
             const veiculos = await listarVeiculos()
             const avarias = await listarAvarias()
@@ -38,16 +38,10 @@ const avariasController = {
                 return res.status(404).json({ error: 'Veiculo não existente nos dados!' })
             }
 
-            if (avarias.length === 0) {
-                novaAvaria.id = 1
-                avarias.push(novaAvaria)
-            } else {
-                const maiorID = avarias.reduce((maior, atual) => {
-                    return atual.id > maior ? atual.id : maior
-                }, 0)
-                novaAvaria.id = maiorID + 1
-                avarias.push(novaAvaria)
-            }
+            const novaPropriedade = {id: avarias.length > 0 ? avarias[avarias.length - 1].id + 1 : 1}
+            novaAvaria = {...novaPropriedade, ...novaAvaria}
+            
+            avarias.push(novaAvaria)
 
             await salvarAvarias(avarias)
             res.status(201).json(novaAvaria)

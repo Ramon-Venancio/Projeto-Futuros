@@ -48,13 +48,13 @@ const veiculosController = {
     },
     create: async (req, res) => {
         try {
-            const novoVeiculo = req.body
+            let novoVeiculo = req.body
             const veiculos = await listarVeiculos()
-
 
             const novaPropriedade = {id: veiculos.length > 0 ? veiculos[veiculos.length - 1].id + 1 : 1}
             novoVeiculo = {...novaPropriedade, ...novoVeiculo}
-            console.log(novoVeiculo)
+            
+            veiculos.push(novoVeiculo)
 
             await salvarVeiculos(veiculos)
             res.status(201).json(novoVeiculo)
