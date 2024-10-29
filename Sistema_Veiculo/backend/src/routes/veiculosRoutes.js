@@ -1,136 +1,155 @@
-import { Router } from 'express'
-import veiculosController from '../controllers/veiculosController.js'
+import { Router } from 'express';
+import veiculosController from '../controllers/veiculosController.js';
 
-const router = Router()
+const router = Router();
+
+/**
+ * @swagger
+ * tags:
+ *   - name: Veículos
+ *     description: Operações relacionadas a veículos
+ */
+
 /**
  * @swagger
  * /veiculos:
- *  get:
- *      summary: Lista todos os veículos
- *      security:
- *          - bearerAuth: []
- *      tags: [Veículos]
- *      responses:
- *          200:
- *              description: Lista de veículos com sucesso
- *              content:
- *                  application/json:
- *                      schema:
- *                          type: array
- *                          items:
- *                              $ref: '#/components/schemas/Veiculo'
- *          401:
- *              description: Não autorizado. Token ausente ou inválido
+ *   get:
+ *     tags: [Veículos]
+ *     summary: Lista todos os veículos
+ *     security: [bearerAuth: []]
+ *     responses:
+ *       200:
+ *         description: Sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Veiculo'
+ *       401:
+ *         description: Não autorizado
  */
-router.get('/', veiculosController.index)
+router.get('/', veiculosController.index);
 
 /**
  * @swagger
  * /veiculos/{parametro}:
- *  get:
- *      summary: Retorna um veículo por ID, placa ou modelo
- *      tags: [Veículos]
- *      parameters:
- *          - in: path
- *            name: parametro
- *            required: true
- *            description: ID, placa ou modelo do veículo
- *            schema:
- *              type: string
- *      responses:
- *          200:
- *              description: Veículo encontrado
- *          400:
- *              description: Veículo não encontrado
- *           500:
- *              description: Erro ao listar veículo
+ *   get:
+ *     tags: [Veículos]
+ *     summary: Encontra um veículo pelo ID, placa ou modelo
+ *     parameters:
+ *       - name: parametro
+ *         in: path
+ *         required: true
+ *         description: ID, placa ou modelo do veículo
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Veículo encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Veiculo'
+ *       404:
+ *         description: Veículo não encontrado
+ *       500:
+ *         description: Erro ao listar veículo
  */
-router.get('/:parametro', veiculosController.indexFind)
+router.get('/:parametro', veiculosController.indexFind);
 
 /**
  * @swagger
  * /veiculos:
- *  post:
- *      summary: Cria um novo veículo
- *      tags: [Veículos]
- *      requestBody:
- *          required: true
- *          content:
- *              application/json:
- *                  schema:
- *                      $ref: '#/components/schemas/Veiculo'
- *      responses:
- *          201:
- *              description: Veículo criado com sucesso
- *          500:
- *              description: Erro ao adicionar veículo
+ *   post:
+ *     tags: [Veículos]
+ *     summary: Adiciona um novo veículo
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Veiculo'
+ *     responses:
+ *       201:
+ *         description: Veículo criado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Veiculo'
+ *       500:
+ *         description: Erro ao adicionar veículo
  */
-router.post('/', veiculosController.create)
+router.post('/', veiculosController.create);
 
 /**
  * @swagger
  * /veiculos/{id}:
- *  put:
- *      summary: Atualiza um veículo existente
- *      tags: [Veículos]
- *      parameters:
- *          - in: path
- *            name: id
- *            required: true
- *            description: ID do veículo
- *            schema:
- *              type: integer
- *      requestBody:
- *          required: true
- *          content:
- *              application/json:
- *                  schema:
- *                      $ref: '#/components/schemas/Veiculo'
- *      responses:
- *          200:
- *              description: Veículo atualizado com sucesso
- *          404:
- *              description: Veículo não encontrado
- *          500:
- *              description: Erro ao atualizar veículo
+ *   put:
+ *     tags: [Veículos]
+ *     summary: Atualiza um veículo pelo ID
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID do veículo
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Veiculo'
+ *     responses:
+ *       200:
+ *         description: Veículo atualizado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Veiculo'
+ *       404:
+ *         description: Veículo não encontrado
+ *       500:
+ *         description: Erro ao atualizar veículo
  */
-router.put('/:id', veiculosController.update)
+router.put('/:id', veiculosController.update);
 
 /**
  * @swagger
  * /veiculos:
- *  delete:
- *      summary: Deleta todos os veículos
- *      tags: [Veículos]
- *      responses:
- *          200:
- *              description: Banco de dados deletado com sucesso
- *          500:
- *              description: Erro ao deletar o banco de dados
+ *   delete:
+ *     tags: [Veículos]
+ *     summary: Deleta todos os veículos
+ *     responses:
+ *       200:
+ *         description: Banco de dados deletado com sucesso
+ *       500:
+ *         description: Erro ao deletar o banco de dados
  */
-router.delete('/', veiculosController.delete)
+router.delete('/', veiculosController.delete);
 
 /**
  * @swagger
  * /veiculos/{id}:
- *  delete:
- *      summary: Deleta um veículo por ID
- *      tags: [Veículos]
- *      parameters:
- *          - in: path
- *            name: id
- *            required: true
- *            description: ID do veículo
- *            schema:
- *              type: integer
- *      responses:
- *          200:
- *              description: Veículo deletado com sucesso
- *          404:
- *              description: Veículo não encontrado
- *          500:
- *              description: Erro ao deletar veículo
+ *   delete:
+ *     tags: [Veículos]
+ *     summary: Remove um veículo pelo ID
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID do veículo
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Veículo deletado com sucesso
+ *       404:
+ *         description: Veículo não encontrado
+ *       500:
+ *         description: Erro ao deletar veículo
  */
-router.delete('/:id', veiculosController.deleteID)
+router.delete('/:id', veiculosController.deleteID);
 
-export default router
+export default router;

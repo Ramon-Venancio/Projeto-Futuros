@@ -1,8 +1,11 @@
-// swagger.js
-import swaggerAutogen from ''
+import swaggerJSDoc from 'swagger-jsdoc'
+import swaggerUi from 'swagger-ui-express'
+import swaggerOptions from './src/config/swaggerConfig.js';
 
-const outputFile = './swagger.json'; // O arquivo de saída para a documentação
-const endpointsFiles = ['./src/routes/*.js']; // As rotas do seu aplicativo
+const swaggerDocs = swaggerJSDoc(swaggerOptions);
 
-// Gera a documentação
-swaggerAutogen(outputFile, endpointsFiles);
+const swagger = (app) => {
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+};
+
+export default swagger
