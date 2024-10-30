@@ -133,9 +133,9 @@ const usersController = {
     },
     login: async (req, res) => {
         try {
-            const { username, email, password } = req.body
+            const { email, password } = req.body
             const usuarios = await listarUsuarios()
-            const usuario = usuarios.find(u => u.username === username && u.email === email && u.password === password)
+            const usuario = usuarios.find(u => u.email === email && u.password === password)
     
             if (!usuario) {
                 return res.status(401).json({ error: 'Credenciais inválidas' })

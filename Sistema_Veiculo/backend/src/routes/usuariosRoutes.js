@@ -108,9 +108,9 @@ router.post("/admin", verificaToken, verificaAdmin, usersController.createAdmin)
  *           schema:
  *             type: object
  *             properties:
- *               username:
+ *               email:
  *                 type: string
- *                 example: admin
+ *                 example: admin@example.com
  *               password:
  *                 type: string
  *                 example: 1234

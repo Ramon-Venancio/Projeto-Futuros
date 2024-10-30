@@ -5,13 +5,6 @@ const router = Router();
 
 /**
  * @swagger
- * tags:
- *   - name: Veículos
- *     description: Operações relacionadas a veículos
- */
-
-/**
- * @swagger
  * /veiculos:
  *   get:
  *     tags: [Veículos]
