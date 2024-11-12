@@ -1,37 +1,9 @@
 [
   {
     "id": 1,
-    "username": "admin",
-    "password": 1234,
-    "email": "admin@example.com",
-    "role": "admin"
-  },
-  {
-    "id": 2,
     "username": "Vinan",
-    "password": 1234,
-    "email": "vinan@gmail.com",
-    "role": "funcionario"
-  },
-  {
-    "id": 3,
-    "username": "Bielzin",
-    "password": 7890,
-    "email": "Bielzindaplay@gatuno.com",
-    "role": "funcionario"
-  },
-  {
-    "id": 4,
-    "username": "Lucinhas",
-    "password": 4567,
-    "email": "lucascareca@gmail.com",
-    "role": "admin"
-  },
-  {
-    "id": 5,
-    "username": "Pedro",
-    "password": 9870,
-    "email": "PedrindoGral@gmail.com",
+    "password": "$2a$10$RIYkvBg0J9RcZRfkp8Nuv.CSIrAPwCRLOdh8PJ.wQRVJQ9OHvcEQO",
+    "email": "ramonitosilva@gmail.com",
     "role": "funcionario"
   }
 ]

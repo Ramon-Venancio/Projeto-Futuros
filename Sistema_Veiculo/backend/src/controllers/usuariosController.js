@@ -1,5 +1,6 @@
 import { listarUsuarios, salvarUsuarios } from "../models/usuariosModel.js"
 import jwt from 'jsonwebtoken'
+import bcrypt from 'bcryptjs'
 
 const usersController = {
     index: async (req, res) => {
@@ -135,12 +136,18 @@ const usersController = {
         try {
             const { email, password } = req.body
             const usuarios = await listarUsuarios()
-            const usuario = usuarios.find(u => u.email === email && u.password === password)
-    
+            const usuario = usuarios.find(u => u.email === email)
+
             if (!usuario) {
-                return res.status(401).json({ error: 'Credenciais inválidas' })
+                return res.status(401).json({ error: 'Email inválido' })
             }
-    
+            
+            const senhaValida = bcrypt.compare(String(password), usuario.password)
+
+            if (!senhaValida) {
+                return res.status(401).json({ erro: 'Senha inválidos' });
+            }
+            
             // Gera o token JWT
             const token = jwt.sign(
                 { id: usuario.id, email: usuario.email, role: usuario.role }, // Payload: dados do usuário
