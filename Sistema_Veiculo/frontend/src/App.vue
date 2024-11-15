@@ -1,11 +1,21 @@
 <template>
-  <nav>
+  <nav v-if="showNav">
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </nav>
   <router-view/>
 </template>
 
+<script>
+export default {
+  computed: {
+    showNav() {
+      const excludedRoutes = ['/login', '/cadastrar']; // Rotas onde o nav não deve aparecer
+      return !excludedRoutes.includes(this.$route.path);
+    }
+  }
+}
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

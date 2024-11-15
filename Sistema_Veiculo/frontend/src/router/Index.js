@@ -1,19 +1,21 @@
+import store from '@/store';
 import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
+    redirect: '/login'
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/LoginView.vue')
+  },
+  {
+    path: '/home',
+    name: 'home',
+    component: () => import('@/views/HomeView.vue'),
+    meta: { requiresAuth: true }
   }
 ]
 
@@ -21,5 +23,17 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes
 })
+
+// Guard de navegação para verificar autenticação
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = store.getters.isAuthenticated
+
+  if (to.matched.some(record => record.meta.requiresAuth) && !isAuthenticated) {
+    alert('Você precisa estar autenticado para acessar essa página!')
+    next('/login'); // Redireciona para o login se não estiver autenticado
+  } else {
+    next();
+  }
+});
 
 export default router
