@@ -36,10 +36,12 @@ const usersController = {
                 return res.status(409).json({ error: 'Usuário já existente' })
             }
 
+            const hashedPassword = await bcrypt.hash(String(password), 10)
+
             const novoUsuario = {
                 id: usuarios.length > 0 ? usuarios[usuarios.length - 1].id + 1 : 1,
                 username,
-                password,
+                password: hashedPassword,
                 email,
                 role: "funcionario"
             };
@@ -48,7 +50,7 @@ const usersController = {
 
             await salvarUsuarios(usuarios)
 
-            res.status(201).json({message: 'Usuário criado com sucesso!', usuario: novoUsuario})
+            res.status(201).json({ message: 'Usuário criado com sucesso!', user: novoUsuario })
         } catch (error) {
             res.status(500).json({ error: 'Erro ao adicionar usuário' })
         }
@@ -63,10 +65,12 @@ const usersController = {
                 return res.status(409).json({ error: 'Usuário já existente' })
             }
 
+            const hashedPassword = await bcrypt.hash(String(password), 10)
+
             const novoUsuario = {
                 id: usuarios.length > 0 ? usuarios[usuarios.length - 1].id + 1 : 1,
                 username,
-                password,
+                password: hashedPassword,
                 email,
                 role: "admin"
             };
@@ -75,9 +79,44 @@ const usersController = {
 
             await salvarUsuarios(usuarios)
 
-            res.status(201).json({message: 'Usuário criado com sucesso!', usuario: novoUsuario})
+            res.status(201).json({ message: 'Usuário criado com sucesso!', user: novoUsuario })
         } catch (error) {
             res.status(500).json({ error: 'Erro ao adicionar usuário' })
+        }
+    },
+    createSuperAdmin: async (req, res) => {
+        try {
+            const { secretKey, username, email, password } = req.body;
+
+            // Valida a chave secreta
+            if (secretKey !== process.env.SUPER_ADMIN_KEY) {
+                return res.status(403).json({ error: "Chave secreta inválida!" });
+            }
+
+            const usuarios = await listarUsuarios();
+            const usuarioExistente = usuarios.find(user => user.email === email);
+
+            if (usuarioExistente) {
+                return res.status(409).json({ error: "Usuário já existente!" });
+            }
+
+            const hashedPassword = await bcrypt.hash(String(password), 10)
+
+            const novoUsuario = {
+                id: usuarios.length > 0 ? usuarios[usuarios.length - 1].id + 1 : 1,
+                username,
+                email,
+                password: hashedPassword,
+                role: "admin",
+                isProtected: true
+            };
+
+            usuarios.push(novoUsuario);
+            await salvarUsuarios(usuarios);
+
+            res.status(201).json({ message: "Superusuário criado com sucesso!", usuario: novoUsuario });
+        } catch (error) {
+            res.status(500).json({ error: "Erro ao criar superusuário" });
         }
     },
     update: async (req, res) => {
@@ -95,7 +134,7 @@ const usersController = {
 
             await salvarUsuarios(usuarios)
 
-            res.json({message: 'Alteração feita com sucesso!', usuario: usuarios[index]})
+            res.json({ message: 'Alteração feita com sucesso!', usuario: usuarios[index] })
         } catch (error) {
             res.status(500).json({ error: 'Erro ao atualizar usuário' })
         }
@@ -123,11 +162,15 @@ const usersController = {
                 return res.status(404).json({ error: 'usuário não encontrado' })
             }
 
+            if (usuarios[index].isProtected) {
+                return res.status(403).json({ error: "Este usuário não pode ser deletado" });
+            }    
+
             const usuarioRemovido = usuarios.splice(index, 1)
 
             await salvarUsuarios(usuarios)
 
-            res.json({message: 'Usuário deletado com sucesso!',usuario: usuarioRemovido})
+            res.json({ message: 'Usuário deletado com sucesso!', usuario: usuarioRemovido })
         } catch (error) {
             res.status(500).json({ error: 'Erro ao deletar usuário' })
         }
@@ -141,13 +184,13 @@ const usersController = {
             if (!usuario) {
                 return res.status(401).json({ error: 'Email inválido' })
             }
-            
+
             const senhaValida = bcrypt.compare(String(password), usuario.password)
 
             if (!senhaValida) {
                 return res.status(401).json({ erro: 'Senha inválidos' });
             }
-            
+
             // Gera o token JWT
             const token = jwt.sign(
                 { id: usuario.id, email: usuario.email, role: usuario.role }, // Payload: dados do usuário
@@ -156,7 +199,7 @@ const usersController = {
             )
 
             // Envia o token para o cliente
-            res.json({ token, message: 'Login realizado com sucesso!' })
+            res.json({ token, user: usuario, message: 'Login realizado com sucesso!' })
         } catch (error) {
             res.status(500).json({ error: 'Erro ao tentar logar' })
         }

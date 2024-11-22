@@ -1,4 +1,4 @@
-import axios from 'axios'
+import apiClient from '@/config/axiosConfig'
 import { createStore } from 'vuex'
 
 export default createStore({
@@ -10,7 +10,6 @@ export default createStore({
   getters: {
     isAuthenticated: (state) => !!state.token,
     isAdmin: (state) => state.role === 'admin',
-    isFuncionario: (state) => state.role === 'funcionario',
   },
   mutations: {
     setToken(state, token) {
@@ -27,13 +26,11 @@ export default createStore({
     }
   },
   actions: {
-    async login({ commit }, { credentials, isAdmin }) {
+    async login({ commit }, credentials) {
       try {
-        const url = isAdmin ?
-          'http://localhost:3000/api/usuarios/admin'
-          : 'http://localhost:3000/api/usuarios/login'
+        const url = '/api/usuarios/login'
         
-        const response = await axios.post(url, credentials)
+        const response = await apiClient.post(url, credentials)
         const {token, user} = response.data
 
         commit('setToken', token)
@@ -59,6 +56,12 @@ export default createStore({
         commit('setToken', token);
       }
     },
+
+    async registerUser(credentials) {
+      const url = "/api/usuarios"
+      
+      await apiClient.post(url, credentials)
+    }
   },
   modules: {
   }

@@ -32,14 +32,16 @@ const avariasController = {
             const veiculos = await listarVeiculos()
             const avarias = await listarAvarias()
 
-            const verificacaoVeiculo = veiculos.some(v => v.id === idVeiculo)
+            const veiculo = veiculos.find(v => v.id === idVeiculo)
 
-            if (!verificacaoVeiculo) {
+            if (!veiculo) {
                 return res.status(404).json({ error: 'Veiculo não existente nos dados!' })
             }
 
             const novaPropriedade = {id: avarias.length > 0 ? avarias[avarias.length - 1].id + 1 : 1}
             novaAvaria = {...novaPropriedade, ...novaAvaria}
+
+            veiculo.push(novaAvaria.data)
             
             avarias.push(novaAvaria)
 
@@ -64,7 +66,7 @@ const avariasController = {
             avarias[index] = { ...avarias[index], ...novosDados }
 
             await salvarAvarias(avarias)
-            res.json(avarias[index])
+            res.json({message: 'Avaria editada com sucesso', avaria:avarias[index]})
         } catch (error) {
             res.status(500).json({ error: 'Erro ao atualizar veículo' })
         }

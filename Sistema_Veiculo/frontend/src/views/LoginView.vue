@@ -2,6 +2,7 @@
     <div>
         <h1>Login</h1>
         <LoginForm/>
+        <button type="button" @click="this.$router.push('/cadastrar')">Registrar</button>
     </div>
 </template>
 
@@ -14,5 +15,7 @@ export default {
 </script>
 
 <style>
-
+button {
+    margin-top: 10px;
+}
 </style>

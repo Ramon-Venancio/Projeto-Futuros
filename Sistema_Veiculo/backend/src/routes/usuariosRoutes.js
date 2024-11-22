@@ -2,7 +2,6 @@ import { Router } from 'express';
 import usersController from '../controllers/usuariosController.js';
 import verificaToken from '../middleware/verificarToken.js';
 import verificaAdmin from '../middleware/verificarAdmin.js';
-import criptografarSenha from '../middleware/criptografaSenha.js';
 
 const router = Router();
 
@@ -73,7 +72,7 @@ router.get("/:id", verificaToken, verificaAdmin, usersController.indexID);
  *       500:
  *         description: Erro ao adicionar funcionário
  */
-router.post("/", criptografarSenha, usersController.createFuncionario);
+router.post("/", usersController.createFuncionario);
 
 /**
  * @swagger
@@ -94,7 +93,10 @@ router.post("/", criptografarSenha, usersController.createFuncionario);
  *       500:
  *         description: Erro ao adicionar administrador
  */
-router.post("/admin", verificaToken, verificaAdmin, criptografarSenha, usersController.createAdmin);
+router.post("/admin", verificaToken, verificaAdmin, usersController.createAdmin);
+
+
+router.post("/superAdmin", usersController.createSuperAdmin)
 
 /**
  * @swagger

@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "msedge", // Use "chrome" se estiver no Chrome
+            "request": "launch",
+            "name": "Debug Vue App (Edge)",
+            "url": "http://localhost:8080", // Ou a URL do seu servidor
+            "webRoot": "${workspaceFolder}",
+            "sourceMaps": true,
+            "runtimeArgs": [
+                "--remote-debugging-port=9222"
+            ]
+        }
+    ]
+}

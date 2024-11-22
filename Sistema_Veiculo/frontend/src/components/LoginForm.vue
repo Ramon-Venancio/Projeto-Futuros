@@ -18,10 +18,6 @@
         required
         >
     </div>
-    <div>
-      <label for="isAdmin">Sou um administrador</label>
-      <input v-model="isAdmin" type="checkbox" id="isAdmin">
-    </div>
     <button type="submit" :disabled="isLoading">
       {{isLoading ? 'Entrando...' : 'Entrar'}}
     </button>
@@ -40,7 +36,6 @@ export default {
         email: '',
         password: '',
       },
-      isAdmin: false,
       isLoading: false,
       error: null
     }
@@ -52,10 +47,7 @@ export default {
       this.error = null
 
       try {
-        await this.login({
-          credentials: this.credentials,
-          isAdmin: this.isAdmin,
-        })
+        await this.login(this.credentials)
 
         this.$router.push('/home')
       } catch (err) {
@@ -69,7 +61,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .error {
   color: red;
   margin-top: 10px;

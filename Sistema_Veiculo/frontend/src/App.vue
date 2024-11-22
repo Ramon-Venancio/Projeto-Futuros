@@ -1,17 +1,18 @@
 <template>
-  <nav v-if="showNav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div>
+    <NavBar v-if="showNav"/>
+    <router-view/>
+  </div>
 </template>
 
 <script>
+import NavBar from './components/NavBar.vue';
 export default {
+  components: { NavBar },
   computed: {
     showNav() {
-      const excludedRoutes = ['/login', '/cadastrar']; // Rotas onde o nav não deve aparecer
-      return !excludedRoutes.includes(this.$route.path);
+      const excluirRotas = ['/login', '/cadastrar']; // Rotas onde o nav não deve aparecer
+      return !excluirRotas.includes(this.$route.path);
     }
   }
 }

@@ -12,10 +12,21 @@ const routes = [
     component: () => import('@/views/LoginView.vue')
   },
   {
+    path: '/cadastrar',
+    name: 'cadastrar',
+    component: () => import('@/views/RegisterView.vue')
+  },
+  {
     path: '/home',
     name: 'home',
     component: () => import('@/views/HomeView.vue'),
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/criar-veiculo',
+    name: 'criarVeiculo',
+    component: () => import('@/views/VeiculoView.vue'),
+    meta: { requiresAuth: true}
   }
 ]
 
