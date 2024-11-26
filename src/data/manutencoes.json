@@ -1,0 +1,14 @@
+[
+  {
+    "placa": "UNO-1234",
+    "localizacao": "frente",
+    "descricao": "parachoque quengado",
+    "id": 2
+  },
+  {
+    "placa": "MKT-2134",
+    "localizacao": "frente",
+    "descricao": "parachoque quengado",
+    "id": 3
+  }
+]
