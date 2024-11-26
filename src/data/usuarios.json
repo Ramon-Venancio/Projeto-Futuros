@@ -33,5 +33,12 @@
     "email": "naruti@gmail.com",
     "password": "$2a$10$BAzWDSOyV9siLVzGAg71/e..V28LEhenz8SuunJwwQlz40Z4hZ.6G",
     "role": "funcionarios"
+  },
+  {
+    "id": 6,
+    "name": "Niko",
+    "email": "niko@gmail.com",
+    "password": "$2a$10$htvTECMrzR2TKlUbRW5zz.4rczfCp0cK6GGrhJcxkWDt2aQmPF9nG",
+    "role": "funcionario"
   }
 ]

@@ -15,3 +15,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+document.getElementById("logout").addEventListener("click", (e) => {
+    e.preventDefault()
+
+    localStorage.removeItem("authToken")
+    window.location.href = '../index.html'
+})

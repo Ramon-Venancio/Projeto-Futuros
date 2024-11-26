@@ -35,8 +35,10 @@ app.use('/api', routes);
 // Tratamento de erros globais
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ message: "Erro interno no servidor" });
+  res.status(500).json({ error: 'Erro interno do servidor!' });
 });
+
+app.get('/favicon.ico', (req, res) => res.status(204).send());
 
 // Inicialização do servidor
 app.listen(PORT, () => {

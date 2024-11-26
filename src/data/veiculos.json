@@ -5,5 +5,19 @@
     "placa": "Hiu-1234",
     "ano": "2009",
     "marca": "Hiu"
+  },
+  {
+    "id": 2,
+    "modelo": "MIUJMK",
+    "placa": "MIU-9244",
+    "ano": "1998",
+    "marca": "MIU"
+  },
+  {
+    "id": 3,
+    "modelo": "MIUJKI",
+    "placa": "MIU-4674",
+    "ano": "2009",
+    "marca": "MIU"
   }
 ]
