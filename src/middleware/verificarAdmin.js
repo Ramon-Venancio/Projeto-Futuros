@@ -3,7 +3,7 @@ const verficaAdmin = (req, res, next) => {
             const usuarioLogado = req.user
             
             if (usuarioLogado.role !== 'admin') {
-                return res.status(403).json({ error: 'Acesso negado. Apenas administradores podem criar contas de administrador.' })
+                return res.status(403).json({ error: 'Acesso negado. Apenas para administradores' })
             }
 
             next()

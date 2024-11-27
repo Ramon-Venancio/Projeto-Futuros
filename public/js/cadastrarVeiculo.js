@@ -29,7 +29,8 @@ form.addEventListener("submit", async (event) => {
             alert("Veículo cadastrado com sucesso!");
             form.reset();
         } else {
-            alert("Erro ao cadastrar veículo. Verifique os dados.");
+            const errorData = await response.json()
+            alert(`Erro: ${errorData.error}`)
         }
     } catch (error) {
         console.error("Erro ao cadastrar veículo:", error);

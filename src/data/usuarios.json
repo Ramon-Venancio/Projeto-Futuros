@@ -40,5 +40,19 @@
     "email": "niko@gmail.com",
     "password": "$2a$10$htvTECMrzR2TKlUbRW5zz.4rczfCp0cK6GGrhJcxkWDt2aQmPF9nG",
     "role": "funcionario"
+  },
+  {
+    "id": 7,
+    "name": "Julio",
+    "email": "julio@gmail.com",
+    "password": "$2a$10$/nTFIOEdz6XV.U8I0UAQZerIYgKk6p3hShUQ7KRF5iuF2Uq8ByOMW",
+    "role": "funcionario"
+  },
+  {
+    "id": 8,
+    "name": "Ana",
+    "email": "ana@gmail.com",
+    "password": "$2a$10$GMbAVW11Cixup7Sbms2pH.THwS06rdz.1Y0BU.B2zSml0dKmDtyG.",
+    "role": "funcionario"
   }
 ]

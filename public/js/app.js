@@ -49,7 +49,6 @@ document.getElementById('email').addEventListener('input', (e) => {
             span.textContent = 'Digite um e-mail válido.';
             span.id = 'emailError'
             span.className = 'text-warning'
-            span.style.textShadow = '0.25px 0.25px 0.5px rgba(0, 0, 0, 0.5)'
     
             emailDiv.appendChild(span);
         }
