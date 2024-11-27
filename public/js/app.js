@@ -30,28 +30,28 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
 })
 
 document.getElementById('email').addEventListener('input', (e) => {
-    e.preventDefault()
-    clearTimeout(typingTimer)
+    clearTimeout(typingTimer); // Limpa o debounce anterior
 
     typingTimer = setTimeout(() => {
-        console.log("entrou")
+        const email = document.getElementById('email').value;
+        const emailDiv = document.getElementById('emailDiv');
+        const emailError = document.getElementById('emailError'); 
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-        const emailError = document.getElementById('emailError');
+
         if (emailError) {
-            emailDiv.removeChild(emailError); // Remove o <span> usando o elemento pai
+            emailDiv.removeChild(emailError);
         }
 
-        const emailRegex = '/^[^\s@]+@[^\s@]+\.[^\s@]+$/';
-        const email = document.getElementById('email').value;
-
-        if (emailRegex.test(email)) {
+        if (!emailRegex.test(email)) {
+    
             const span = document.createElement('span');
             span.textContent = 'Digite um e-mail válido.';
             span.id = 'emailError'
-            span.className = 'text-warning'; // Adiciona uma classe Bootstrap para estilização
-
-            const emailDiv = document.getElementById('emailDiv');
+            span.className = 'text-warning'
+            span.style.textShadow = '0.25px 0.25px 0.5px rgba(0, 0, 0, 0.5)'
+    
             emailDiv.appendChild(span);
         }
-    }, 1000);
-})
+    }, 500)
+});
