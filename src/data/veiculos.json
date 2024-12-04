@@ -1,23 +1,35 @@
 [
   {
     "id": 1,
-    "modelo": "HIUJKLM",
-    "placa": "Hiu-1234",
-    "ano": "2009",
-    "marca": "Hiu"
+    "modelo": "Toyota Corolla",
+    "placa": "ABC-1234"
   },
   {
     "id": 2,
-    "modelo": "MIUJMK",
-    "placa": "MIU-9244",
-    "ano": "1998",
-    "marca": "MIU"
+    "modelo": "Honda Civic",
+    "placa": "XYZ-5678"
   },
   {
     "id": 3,
-    "modelo": "MIUJKI",
-    "placa": "MIU-4674",
-    "ano": "2009",
-    "marca": "MIU"
+    "modelo": "Chevrolet Onix",
+    "placa": "DEF-8901",
+    "avarias": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
+  },
+  {
+    "id": 4,
+    "modelo": "Volkswagen Gol",
+    "placa": "GHI-3456"
+  },
+  {
+    "id": 5,
+    "modelo": "Fiat Argo",
+    "placa": "JKL-6789"
   }
 ]

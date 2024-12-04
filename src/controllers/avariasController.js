@@ -32,16 +32,17 @@ const avariasController = {
             const veiculos = await listarVeiculos()
             const avarias = await listarAvarias()
 
-            const veiculo = veiculos.find(v => v.id === idVeiculo)
+            let veiculo = veiculos.find(v => v.id === idVeiculo)
 
             if (!veiculo) {
                 return res.status(404).json({ error: 'Veiculo não existente nos dados!' })
             }
 
-            const novaPropriedade = {id: avarias.length > 0 ? avarias[avarias.length - 1].id + 1 : 1}
-            novaAvaria = {...novaPropriedade, ...novaAvaria}
-
-            veiculo.push(novaAvaria.data)
+            novaAvaria = {
+                id: avarias.length > 0 ? avarias[avarias.length - 1].id + 1 : 1,
+                ...novaAvaria
+            }
+            console.log(novaAvaria)
             
             avarias.push(novaAvaria)
 

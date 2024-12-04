@@ -5,7 +5,7 @@ import { fileURLToPath} from 'url'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const caminhoArquivo = path.join(__dirname, '..', 'data', 'manutencoes.json')
+const caminhoArquivo = path.join(__dirname, '..', 'data', 'avarias.json')
 
 export const listarAvarias = async () => {
      try {
@@ -17,9 +17,9 @@ export const listarAvarias = async () => {
      }
 }
 
-export const salvarAvarias = async (veiculos) => {
+export const salvarAvarias = async (avarias) => {
      try {
-          await fs.promises.writeFile(caminhoArquivo, JSON.stringify(veiculos, null, 2))
+          await fs.promises.writeFile(caminhoArquivo, JSON.stringify(avarias, null, 2))
      } catch (error) {
           console.error(`Erro ao salvar o veículo: ${error}`)
           throw new Error('Erro ao salvar o veículo')

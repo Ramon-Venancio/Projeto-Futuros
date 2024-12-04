@@ -6,14 +6,11 @@ form.addEventListener("submit", async (event) => {
     const veiculo = {
         modelo: document.getElementById("modelo").value,
         placa: document.getElementById("placa").value,
-        ano: document.getElementById("ano").value,
-        marca: document.getElementById("marca").value
     };
 
     try {
         // Recupera o token do localStorage
         const token = localStorage.getItem("authToken")
-        console.log(token)
 
         const response = await fetch("http://localhost:3000/api/veiculos", {
             method: "POST",

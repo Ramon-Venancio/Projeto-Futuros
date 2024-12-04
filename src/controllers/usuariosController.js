@@ -178,14 +178,12 @@ const usersController = {
             const { email, password } = req.body
             const usuarios = await listarUsuarios()
             const usuario = usuarios.find(u => u.email === email)
-            console.log(usuario)
 
             if (!usuario) {
                 return res.status(401).json({ error: 'Email inválido' })
             }
 
             const senhaValida = await bcrypt.compare(String(password), usuario.password)
-            console.log(senhaValida)
 
             if (!senhaValida) {
                 return res.status(401).json({ erro: 'Senha inválidos' });
