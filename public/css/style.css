@@ -1,5 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300&display=swap');
+
+
 .nav-link{
     margin-left: 1px;
+    font-family: "Roboto Slab", serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.nav-link:hover{
+    color: white;
+    transition: 0.5s;
 }
 
 .Logo{
@@ -8,4 +20,35 @@
     margin: 0;
     padding: 0;
     margin-right: 10px;
+}
+.caixa{
+    margin-left: 20px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-top: 5px;
+}
+
+.slime{
+    font-family: "Roboto Slab", serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.gato{
+    margin: 0 20px;
+}
+
+#logout{
+    color: white;
+    font-family: "Roboto Slab", serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+}
+
+#logout:hover{
+    transition: 0.3s;
+    transform: scale(1.1);
+    background-color: #4e545a;
+    border: solid rgb(255, 255, 255) 1px;
 }

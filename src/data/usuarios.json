@@ -33,5 +33,12 @@
     "email": "naruti@gmail.com",
     "password": "$2a$10$BAzWDSOyV9siLVzGAg71/e..V28LEhenz8SuunJwwQlz40Z4hZ.6G",
     "role": "funcionarios"
+  },
+  {
+    "id": 6,
+    "name": "rodrigo",
+    "email": "meuzovo123@hotmalil.com",
+    "password": "$2a$10$2w8vBo.5Viu6O5AeAllzOu/35jrxpc2Tt.e/dDo.0y7ajUdC/mbD2",
+    "role": "funcionario"
   }
 ]
