@@ -52,3 +52,10 @@
     background-color: #4e545a;
     border: solid rgb(255, 255, 255) 1px;
 }
+
+body{
+   border-left: 10px solid #212529;
+   border-right: 10px solid #212529;
+   margin: 0;
+   padding: 0;
+}
