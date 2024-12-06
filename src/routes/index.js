@@ -22,7 +22,7 @@ app.use('/veiculos', verificaToken, verificaAdmin, veiculosRoutes);
 app.use('/avarias', verificaToken, avariasRoutes);
 
 // Rota de usuários (pode adicionar proteção se necessário)
-app.use('/usuarios', verificaToken, usuariosRoutes);
+app.use('/usuarios', usuariosRoutes);
 
 // Rota de manutenções (necessário estar logado)
 app.use('/manutencoes', verificaToken, manutencoesRoutes);

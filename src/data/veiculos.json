@@ -28,6 +28,10 @@
   {
     "id": 5,
     "modelo": "Fiat Argo",
-    "placa": "JKL-6789"
+    "placa": "JXL-6789",
+    "avarias": [
+      6,
+      7
+    ]
   }
 ]

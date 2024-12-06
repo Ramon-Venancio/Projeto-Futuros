@@ -1,8 +1,9 @@
 let veiculos = ''
 const form = document.getElementById('adicionarAvariaForm')
+const searchInput = document.getElementById('searchInput')
+const token = localStorage.getItem("authToken")
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const token = localStorage.getItem("authToken")
     const response = await fetch('http://localhost:3000/api/veiculos', {
         method: 'GET',
         headers: {
@@ -17,6 +18,51 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error(`Erro: ${response.status} - ${response.statusText}`)
     }
 })
+
+searchInput.addEventListener('input', async () => {
+    const searchInput = document.getElementById('searchInput')
+    const searchResults = document.getElementById('searchResults')
+    const query = searchInput.value.toLowerCase()
+    searchResults.innerHTML = ''
+
+    const placas = veiculos.map(veiculo => {
+        return veiculo.placa
+    })
+
+    if (query) {
+        const filteredPlacas = placas.filter(placa =>
+            placa.toLowerCase().includes(query)
+        )
+        if (filteredPlacas.length > 0) {
+            searchResults.classList.remove('d-none');
+            filteredPlacas.forEach(item => {
+                const resultItem = document.createElement('button');
+                resultItem.className = 'list-group-item list-group-item-action';
+                resultItem.textContent = `${item}`;
+                resultItem.type = 'button';
+                resultItem.addEventListener('click', () => {
+                    searchInput.value = item; // Preenche o campo com a placa selecionada
+                    searchResults.classList.add('d-none'); // Oculta os resultados
+                });
+                searchResults.appendChild(resultItem);
+            });
+        } else {
+            searchResults.classList.add('d-none');
+        }
+    } else {
+        searchResults.classList.add('d-none');
+    }
+});
+// Ocultar os resultados se o campo perder o foco
+searchInput.addEventListener('blur', () => {
+    setTimeout(() => searchResults.classList.add('d-none'), 200); // Adiciona um pequeno atraso para capturar cliques
+});
+// Mostrar os resultados novamente ao focar no campo
+searchInput.addEventListener('focus', () => {
+    if (searchInput.value && searchResults.childElementCount > 0) {
+        searchResults.classList.remove('d-none');
+    }
+});
 
 const opcoes = {
     externo: ["Frontal", "Traseira", "Lateral Direita", "Lateral Esquerda", "Teto", "Rodas e Pneus", "Vidros"],

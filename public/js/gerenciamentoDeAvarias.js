@@ -104,11 +104,11 @@ async function renderVeiculos() {
                                     Adicionar Avaria
                                 </button>
                                 <div class="dropdown ms-4">
-                                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" onclick="agendarManutencao(${index})">
                                     Agendar Manuntenção
                                     </button>
         
-                                    <form class="dropdown-menu p-4" id="manutencaoForm">
+                                    <form class="dropdown-menu p-4" id="manutencaoForm${index}">
                                         <div class="mb-3">
                                             <label for="dataAvaria" class="form-label">
                                             Data de Agendamento
@@ -253,11 +253,14 @@ function editAvaria(veiculoIndex, avariaID) {
 }
 
 // Agendar manutenção
-document.body.addEventListener('submit', async (e) => {
-    if (e.target && e.target.id === 'manutencaoForm') {
+function agendarManutencao(indexVeiculo) {
+    const veiculo = veiculos[indexVeiculo]
+    console.log("entrou1")
+
+    document.getElementById(`manutencaoForm${indexVeiculo}`).onsubmit = async (e) => {
         e.preventDefault();
-        console.log("entrou")
-        const veiculo = ''
+        console.log("entrou2")
+
         const manutencao = {
             idVeiculo: veiculo.id,
             idAvarias: veiculo.avarias,
@@ -281,14 +284,14 @@ document.body.addEventListener('submit', async (e) => {
                 console.error(`Erro: ${response.status} - ${response.statusText}`);
                 return;
             }
-
             alert('Manutenção agendada com sucesso');
+            document.getElementById(`manutencaoForm${indexVeiculo}`).reset()
         } catch (error) {
             console.error("Erro na requisição:", error);
             alert("Ocorreu um erro ao tentar agendar a manutenção.");
         }
     }
-})
+}
 
 // Deletar avaria
 async function deleteAvaria(veiculoIndex, avariaIndex, avariaID) {
