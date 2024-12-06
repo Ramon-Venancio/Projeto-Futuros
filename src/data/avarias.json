@@ -2,9 +2,9 @@
   {
     "id": 1,
     "placa": "DEF-8901",
-    "localizacao": "frontal",
-    "descricao": "Para-choque arregaçado",
-    "data": "2025-06-11"
+    "localizacao": "traseira",
+    "descricao": "Lanternas quebradas",
+    "data": "2025-07-11"
   },
   {
     "id": 2,
@@ -22,27 +22,11 @@
     "data": "32424-11-12"
   },
   {
-    "id": 4,
-    "idVeiculo": 3,
-    "placa": "DEF-8901",
-    "localizacao": "freios",
-    "descricao": "Quebrados",
-    "data": "2493-12-12"
-  },
-  {
     "id": 5,
     "idVeiculo": 3,
     "placa": "DEF-8901",
     "localizacao": "lateral esquerda",
     "descricao": "wdqw",
     "data": "2932-04-12"
-  },
-  {
-    "id": 6,
-    "idVeiculo": 3,
-    "placa": "DEF-8901",
-    "localizacao": "ar condicionado",
-    "descricao": "asdA",
-    "data": "2393-12-12"
   }
 ]

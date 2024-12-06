@@ -1,5 +1,4 @@
-import { listarManutencoes, salvarManutencoes } from "../models/manutencoesModel"
-import { listarVeiculos } from "../models/veiculosModel"
+import { listarManutencoes, salvarManutencoes } from "../models/manutencoesModel.js"
 
 const manutencoesController = {
     index: async (req, res) => {
@@ -7,96 +6,92 @@ const manutencoesController = {
             const manutencoes = await listarManutencoes()
             res.json(manutencoes)
         } catch (error) {
-            res.status(500).json({ error: 'Erro ao listar manutencoes' })
+            res.status(500).json({ error: "Erro ao listar manutenções" })
         }
     },
     indexID: async (req, res) => {
         try {
-            const id = parseInt(req.params.id)
+            const id = parseInt(req.params.id, 10)
             const manutencoes = await listarManutencoes()
-            const manutencao = manutencoes.find(a => a.id === id)
+            const manutencao = manutencoes.find((a) => a.id === id)
 
             if (!manutencao) {
-                return res.status(404).json({ error: 'manutencao não encontrado' })
+                return res.status(404).json({ error: "Manutenção não encontrada" })
             }
 
             res.json(manutencao)
         } catch (error) {
-            res.status(500).json({ error: 'Erro ao mostrar a manutencao' })
+            res.status(500).json({ error: "Erro ao mostrar a manutenção" })
         }
     },
     create: async (req, res) => {
         try {
-            let novaManutencao = req.body
-            const idVeiculo = parseInt(req.params.id)
-            const veiculos = await listarVeiculos()
+            const novaManutencao = req.body
             const manutencoes = await listarManutencoes()
 
-            let veiculo = veiculos.find(v => v.id === idVeiculo)
-
-            if (!veiculo) {
-                return res.status(404).json({ error: 'Veiculo não existente nos dados!' })
-            }
-
-            novaManutencao = {
+            const novaManutencaoComId = {
                 id: manutencoes.length > 0 ? manutencoes[manutencoes.length - 1].id + 1 : 1,
-                ...novaManutencao
+                ...novaManutencao,
             }
+
+            manutencoes.push(novaManutencaoComId)
 
             await salvarManutencoes(manutencoes)
-            res.status(201).json(novaManutencao)
+            res.status(201).json(novaManutencaoComId)
         } catch (error) {
-            res.status(500).json({ error: 'Erro ao adicionar manutenção' })
+            res.status(500).json({ error: "Erro ao adicionar manutenção" })
         }
     },
     update: async (req, res) => {
         try {
-            const id = parseInt(req.params.id)
+            const id = parseInt(req.params.id, 10)
             const novosDados = req.body
 
-            let manutencoes = await listarManutencoes()
-            const index = manutencoes.findIndex(a => a.id === id)
+            const manutencoes = await listarManutencoes()
+            const index = manutencoes.findIndex((a) => a.id === id)
 
             if (index === -1) {
-                return res.status(404).json({ error: 'Manutenção não encontrada' })
+                return res.status(404).json({ error: "Manutenção não encontrada" })
             }
 
             manutencoes[index] = { ...manutencoes[index], ...novosDados }
 
             await salvarManutencoes(manutencoes)
-            res.json({message: 'Manutenção editada com sucesso', manutencao:manutencoes[index]})
+            res.json({
+                message: "Manutenção editada com sucesso",
+                manutencao: manutencoes[index],
+            })
         } catch (error) {
-            res.status(500).json({ error: 'Erro ao atualizar manutenção' })
+            res.status(500).json({ error: "Erro ao atualizar manutenção" })
         }
     },
     delete: async (req, res) => {
         try {
-            let manutencoes = await listarManutencoes()
-
-            manutencoes.length = 0
-
-            await salvarManutencoes(manutencoes)
-            res.json('Banco de dados deletado com sucesso.')
+            await salvarManutencoes([])
+            res.json({ message: "Banco de dados deletado com sucesso." })
         } catch (error) {
-            res.status(500).json({ error: 'Erro ao deletar o banco de dados' })
+            res.status(500).json({ error: "Erro ao deletar o banco de dados" })
         }
     },
     deleteID: async (req, res) => {
         try {
-            const id = parseInt(req.params.id)
+            const id = parseInt(req.params.id, 10)
 
-            let manutencoes = await listarManutencoes()
-            const index = manutencoes.findIndex(a => a.id === id)
+            const manutencoes = await listarManutencoes()
+            const index = manutencoes.findIndex((a) => a.id === id)
+
             if (index === -1) {
-                return res.status(404).json({ error: 'manutenção não encontrado' })
-
+                return res.status(404).json({ error: "Manutenção não encontrada" })
             }
-            const manutencaoRemovida = manutencoes.splice(index, 1)
+
+            const [manutencaoRemovida] = manutencoes.splice(index, 1)
 
             await salvarManutencoes(manutencoes)
             res.json(manutencaoRemovida)
         } catch (error) {
-            res.status(500).json({ error: 'Erro ao deletar manutenção' })
+            res.status(500).json({ error: "Erro ao deletar manutenção" })
         }
-    }
+    },
 }
+
+export default manutencoesController

@@ -65,30 +65,70 @@ async function renderVeiculos() {
     container.innerHTML = ''; // Limpa o conteúdo atual
 
     veiculos.forEach((veiculo, index) => {
-        if (veiculo.avarias) {
+        if (veiculo.avarias && veiculo.avarias.length > 0) {
             const card = document.createElement('div');
             card.className = 'card mb-3';
             card.innerHTML = `
-                <div class="card-header"><h4>${veiculo.modelo} - ${veiculo.placa}</h4></div>
-                <div class="card-body">
-                  <h5 class="card-title">Avarias:</h5>
-                  <ul class="list-group mb-3">
-                    ${veiculo.avarias.map((id) => `
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                        ${avarias[id - 1].localizacao}: ${avarias[id - 1].descricao} (${avarias[id - 1].data})
-                          <div>
-                            <button class="btn btn-sm btn-warning me-2" onclick="editAvaria(${index})">Editar</button>
-                            <button class="btn btn-sm btn-danger" onclick="deleteAvaria(${index}, ${id})">Deletar</button>
-                          </div>
-                        </li>
-                    `).join('')}
-                  </ul>
-                  <button class="btn btn-secondary" onclick="addAvaria(${index})">Adicionar Avaria</button>
-                  <button class="btn btn-primary" onclick="agendarManutencao(${index})">Agendar Manutenção</button>
+            <div class="card-header"><h4>${veiculo.modelo} - ${veiculo.placa}</h4></div>
+        
+            <div class="card-body">
+                <div id="accordionExample-${index}" class="accordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading-${index}">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${index}" aria-expanded="false" aria-controls="collapse-${index}">
+                            Avarias
+                        </button>
+                        </h2>
+                        <div id="collapse-${index}" class="accordion-collapse collapse" aria-labelledby="heading-${index}" data-bs-parent="#accordionExample-${index}">
+                        <div class="accordion-body">
+                            <ul class="list-group mb-3">
+                            ${veiculo.avarias.map((id, indexAvaria) => {
+                                const avaria = avarias.find(avaria => avaria.id === id)
+                                return `
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                ${avaria.localizacao}: ${avaria.descricao} (${avaria.data})
+                                <div>
+                                    <button class="btn btn-sm btn-warning me-2" onclick="editAvaria(${index}, ${id})">
+                                    Editar
+                                    </button>
+                                    <button class="btn btn-sm btn-danger" onclick="deleteAvaria(${index}, ${indexAvaria}, ${id})">
+                                    Deletar
+                                    </button>
+                                </div>
+                                </li>
+                                `
+                            }).join('')}
+                            </ul>
+                            <div class="d-flex">
+                                <button class="btn btn-secondary" onclick="addAvaria(${index})">
+                                    Adicionar Avaria
+                                </button>
+                                <div class="dropdown ms-4">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                                    Agendar Manuntenção
+                                    </button>
+        
+                                    <form class="dropdown-menu p-4" id="manutencaoForm">
+                                        <div class="mb-3">
+                                            <label for="dataAvaria" class="form-label">
+                                            Data de Agendamento
+                                            </label>
+                                            <input type="date" class="form-control" id="dataAgendamento" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">
+                                            Agendar
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              `;
+            </div>
+            </div>
+            `
             container.appendChild(card);
-        }
+        }        
     });
 }
 
@@ -113,7 +153,7 @@ function addAvaria(veiculoIndex) {
         const avaria = {
             idVeiculo: veiculo.id,
             placa: document.getElementById('veiculoPlaca').value.trim(),
-            localizacao: document.getElementById('localizacaoSelect').value.trim(),
+            localizacao: document.getElementById('localizacaoSelect').value,
             descricao: document.getElementById('descricaoAvaria').value.trim(),
             data: document.getElementById('dataAvaria').value.trim(),
         }
@@ -168,40 +208,42 @@ function addAvaria(veiculoIndex) {
     }
 }
 
-// Agendar manutenção
-async function agendarManutencao(veiculoIndex) {
-    const veiculo = veiculos[veiculoIndex];
-    const response = await fetch(`http://localhost:3000/api/manutencoes/${veiculo.id}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data: new Date().toISOString().split('T')[0] })
-    });
-
-    if (response.ok) {
-        alert(`Manutenção agendada para o veículo ${veiculo.modelo} (${veiculo.placa})`);
-    } else {
-        alert('Erro ao agendar manutenção.');
-    }
-}
-
 // Editar avaria existente
-function editAvaria(veiculoIndex, avariaIndex) {
-    const veiculo = veiculos[veiculoIndex];
-    const avaria = veiculo.avarias[avariaIndex - 1];
-    document.getElementById('veiculoPlaca').value = veiculo.placa;
-    document.getElementById('descricaoAvaria').value = avaria.descricao;
-    document.getElementById('dataAvaria').value = avaria.data;
-    const modal = new bootstrap.Modal(document.getElementById('avariaModal'));
-    modal.show();
+function editAvaria(veiculoIndex, avariaID) {
+    const veiculo = veiculos[veiculoIndex]
+    const avaria = avarias.find(avaria => avaria.id === avariaID)
+
+    document.getElementById('avariaModalLabel').innerHTML = 'Adicionar Avaria'
+
+    document.getElementById('veiculoPlaca').value = veiculo.placa
+    for (const [key, value] of Object.entries(opcoes)) {
+        value.forEach(localizacao => {
+            if (localizacao.toLocaleLowerCase().trim() === avaria.localizacao.trim()) {
+                document.getElementById('categoriaSelect').value = key
+                document.getElementById('categoriaSelect').dispatchEvent(new Event('change'))
+            }
+        })
+    }
+    document.getElementById('localizacaoSelect').value = avaria.localizacao
+    document.getElementById('descricaoAvaria').value = avaria.descricao
+    document.getElementById('dataAvaria').value = avaria.data
+
+    const modal = new bootstrap.Modal(document.getElementById('avariaModal'))
+    modal.show()
+
     document.getElementById('avariaForm').onsubmit = async (e) => {
-        e.preventDefault();
-        avaria.descricao = document.getElementById('descricaoAvaria').value;
-        avaria.data = document.getElementById('dataAvaria').value;
+        e.preventDefault()
+        avaria.localizacao = document.getElementById('localizacaoSelect').value
+        avaria.descricao = document.getElementById('descricaoAvaria').value
+        avaria.data = document.getElementById('dataAvaria').value
 
         // Simular requisição ao back-end para atualizar avaria
-        await fetch(`http://localhost:3000/api/avarias/${veiculo.id}/${avariaIndex}`, {
+        await fetch(`http://localhost:3000/api/avarias/${avariaID}`, {
             method: "PUT",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
             body: JSON.stringify(avaria)
         });
 
@@ -210,41 +252,84 @@ function editAvaria(veiculoIndex, avariaIndex) {
     };
 }
 
-// Deletar avaria
-async function deleteAvaria(veiculoIndex, avariaID) {
-    const veiculo = veiculos[veiculoIndex]
-    veiculo.avarias.splice(avariaID - 1, 1)
+// Agendar manutenção
+document.body.addEventListener('submit', async (e) => {
+    if (e.target && e.target.id === 'manutencaoForm') {
+        e.preventDefault();
+        console.log("entrou")
+        const veiculo = ''
+        const manutencao = {
+            idVeiculo: veiculo.id,
+            idAvarias: veiculo.avarias,
+            data: document.getElementById('dataAgendamento').value,
+            finalizado: false
+        };
 
-    const responseAvaria = await fetch(`http://localhost:3000/api/avarias/${avariaID}`, {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+        try {
+            const response = await fetch(`http://localhost:3000/api/manutencoes`, {
+                method: "POST",
+                headers: { 
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify(manutencao)
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                alert(`Error: ${errorData.error}`);
+                console.error(`Erro: ${response.status} - ${response.statusText}`);
+                return;
+            }
+
+            alert('Manutenção agendada com sucesso');
+        } catch (error) {
+            console.error("Erro na requisição:", error);
+            alert("Ocorreu um erro ao tentar agendar a manutenção.");
         }
-    })
-
-    if (!responseAvaria.ok) {
-        const errorData = await responseAvaria.json()
-        alert(`Error: ${errorData.error}`)
-        console.error(`Erro: ${responseAvaria.status} - ${responseAvaria.statusText}`)
-        return
     }
+})
 
-    const responseVeiculo = await fetch(`http://localhost:3000/api/veiculos/${veiculo.id}`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(veiculo),
-    })
+// Deletar avaria
+async function deleteAvaria(veiculoIndex, avariaIndex, avariaID) {
+    try {
+        const responseAvaria = await fetch(`http://localhost:3000/api/avarias/${avariaID}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            }
+        })
 
-    if (!responseVeiculo.ok) {
-        const errorData = await responseVeiculo.json()
-        alert(`Error: ${errorData.error}`)
-        console.error(`Erro: ${responseVeiculo.status} - ${responseVeiculo.statusText}`)
-        return
+        if (!responseAvaria.ok) {
+            const errorData = await responseAvaria.json()
+            alert(`Error: ${errorData.error}`)
+            console.error(`Erro: ${responseAvaria.status} - ${responseAvaria.statusText}`)
+            return
+        }
+
+        const veiculo = veiculos[veiculoIndex]
+        veiculo.avarias.splice(avariaIndex, 1)
+
+        const responseVeiculo = await fetch(`http://localhost:3000/api/veiculos/${veiculo.id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(veiculo),
+        })
+
+        if (!responseVeiculo.ok) {
+            const errorData = await responseVeiculo.json()
+            alert(`Error: ${errorData.error}`)
+            console.error(`Erro: ${responseVeiculo.status} - ${responseVeiculo.statusText}`)
+            return
+        }
+
+        renderVeiculos()
+    } catch (error) {
+        console.error("Erro ao processar as requisições:", error)
+        alert("Erro ao deletar avaria.")
     }
-
-    renderVeiculos();
 }

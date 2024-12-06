@@ -42,7 +42,6 @@ const avariasController = {
                 id: avarias.length > 0 ? avarias[avarias.length - 1].id + 1 : 1,
                 ...novaAvaria
             }
-            console.log(novaAvaria)
             
             avarias.push(novaAvaria)
 

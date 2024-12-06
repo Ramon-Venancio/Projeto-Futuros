@@ -46,9 +46,6 @@ document.getElementById('categoriaSelect').addEventListener('change', function (
 form.addEventListener('submit', async (e) => {
     e.preventDefault()
 
-    console.log("entrou")
-    const token = localStorage.getItem("authToken")
-
     // Obter os valores do formulário
     let avaria = {
         placa: document.getElementById('searchInput').value.trim(),
