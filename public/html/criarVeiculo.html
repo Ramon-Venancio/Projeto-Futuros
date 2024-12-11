@@ -10,39 +10,35 @@
 </head>
 
 <body class="bg-light">
-    <!-- Barra de Navegação -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Minha Aplicação</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="home.html">Home</a>
-                    </li>
-                    <li class="nav-item admin">
-                        <a class="nav-link" href="listarAvarias.html">Listar Avaria</a>
-                    </li>
-                    <li class="nav-item admin">
-                        <a class="nav-link" href="criarAvaria.html">Adicionar Avaria</a>
-                    </li>
-                    <li class="nav-item admin">
-                        <a class="nav-link" href="criarVeiculo.html">Cadastrar Veículo</a>
-                    </li>
-                    <li class="nav-item admin">
-                        <a class="nav-link" href="listaVeiculos.html">Listar Veículos</a>
-                    </li>
-                    <li>
-                        <button type="button" id="logout" class="btn btn-secondary">Logout</button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
+  <!-- Barra de Navegação -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Minha Aplicação</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="home.html">Home</a>
+          </li>
+          <li class="nav-item admin">
+            <a class="nav-link" href="gerenciamentoDeAvarias.html">Avarias</a>
+          </li>
+          <li class="nav-item admin">
+            <a class="nav-link" href="criarVeiculo.html">Hitorico</a>
+          </li>
+          <li class="nav-item admin">
+            <a class="nav-link" href="listaVeiculos.html">Veiculos</a>
+          </li>
+          <li>
+            <button type="button" id="logout" class="btn btn-secondary">Logout</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
         <div class="card shadow-lg w-100" style="max-width: 600px;">
             <div class="card-body">
@@ -50,13 +46,19 @@
                 <form id="cadastrarVeiculoForm">
                     <div class="mb-3">
                         <label for="modelo" class="form-label">Modelo</label>
-                        <input type="text" class="form-control" id="modelo" placeholder="Digite o modelo do veículo"
-                            required>
+                        <input type="text" class="form-control" id="modelo" placeholder="Digite o modelo do veículo" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modelo" class="form-label">Marca</label>
+                        <input type="text" class="form-control" id="marca" placeholder="Digite o modelo do veículo" required>
                     </div>
                     <div class="mb-3">
                         <label for="placa" class="form-label">Placa</label>
-                        <input type="text" class="form-control" id="placa" placeholder="Digite a placa do veículo"
-                            required>
+                        <input type="text" class="form-control" id="placa" placeholder="Digite a placa do veículo" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modelo" class="form-label">Ano</label>
+                        <input type="number" class="form-control" id="ano" placeholder="Digite o ano do veículo" required>
                     </div>
                     <button type="submit" class="btn btn-secondary w-100">Cadastrar Veículo</button>
                 </form>

@@ -1,14 +1,1 @@
-[
-  {
-    "id": 1,
-    "idVeiculo": 3,
-    "idAvarias": [
-      1,
-      2,
-      3,
-      5
-    ],
-    "data": "2028-02-12",
-    "finalizado": false
-  }
-]
+[]

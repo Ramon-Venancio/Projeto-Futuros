@@ -4,7 +4,9 @@ form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const veiculo = {
+        ano: document.getElementById("ano").value,
         modelo: document.getElementById("modelo").value,
+        marca: document.getElementById("marca").value,
         placa: document.getElementById("placa").value,
     };
 

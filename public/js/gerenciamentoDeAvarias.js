@@ -113,7 +113,7 @@ async function renderVeiculos() {
                                             <label for="dataAvaria" class="form-label">
                                             Data de Agendamento
                                             </label>
-                                            <input type="date" class="form-control" id="dataAgendamento" required>
+                                            <input type="date" class="form-control" id="dataAgendamento${index}" required>
                                         </div>
                                         <button type="submit" class="btn btn-primary">
                                             Agendar
@@ -255,16 +255,14 @@ function editAvaria(veiculoIndex, avariaID) {
 // Agendar manutenção
 function agendarManutencao(indexVeiculo) {
     const veiculo = veiculos[indexVeiculo]
-    console.log("entrou1")
 
     document.getElementById(`manutencaoForm${indexVeiculo}`).onsubmit = async (e) => {
-        e.preventDefault();
-        console.log("entrou2")
+        e.preventDefault()
 
         const manutencao = {
             idVeiculo: veiculo.id,
             idAvarias: veiculo.avarias,
-            data: document.getElementById('dataAgendamento').value,
+            data: document.getElementById(`dataAgendamento${indexVeiculo}`).value,
             finalizado: false
         };
 

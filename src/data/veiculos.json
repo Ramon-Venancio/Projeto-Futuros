@@ -1,37 +1,170 @@
 [
   {
-    "id": 1,
-    "modelo": "Toyota Corolla",
-    "placa": "ABC-1234"
-  },
-  {
     "id": 2,
-    "modelo": "Honda Civic",
-    "placa": "XYZ-5678"
+    "ano": "2018",
+    "modelo": "Civic",
+    "marca": "Honda",
+    "placa": "XYZ4F56"
   },
   {
     "id": 3,
-    "modelo": "Chevrolet Onix",
-    "placa": "DEF-8901",
-    "avarias": [
-      1,
-      2,
-      3,
-      5
-    ]
+    "ano": "2021",
+    "modelo": "Compass",
+    "marca": "Jeep",
+    "placa": "LMN7G89"
   },
   {
     "id": 4,
-    "modelo": "Volkswagen Gol",
-    "placa": "GHI-3456"
+    "ano": "2019",
+    "modelo": "HB20",
+    "marca": "Hyundai",
+    "placa": "OPQ2J34"
   },
   {
     "id": 5,
-    "modelo": "Fiat Argo",
-    "placa": "JXL-6789",
-    "avarias": [
-      6,
-      7
-    ]
+    "ano": "2022",
+    "modelo": "Onix",
+    "marca": "Chevrolet",
+    "placa": "QRS8K12"
+  },
+  {
+    "id": 6,
+    "ano": "2017",
+    "modelo": "EcoSport",
+    "marca": "Ford",
+    "placa": "UVW3L45"
+  },
+  {
+    "id": 7,
+    "ano": "2020",
+    "modelo": "Strada",
+    "marca": "Fiat",
+    "placa": "WXY5M67"
+  },
+  {
+    "id": 8,
+    "ano": "2015",
+    "modelo": "Duster",
+    "marca": "Renault",
+    "placa": "ZAB9P34"
+  },
+  {
+    "id": 9,
+    "ano": "2023",
+    "modelo": "Hilux",
+    "marca": "Toyota",
+    "placa": "CAD1Q78"
+  },
+  {
+    "id": 10,
+    "ano": "2016",
+    "modelo": "Polo",
+    "marca": "Volkswagen",
+    "placa": "EFG3R56"
+  },
+  {
+    "id": 11,
+    "ano": "2018",
+    "modelo": "Corolla",
+    "marca": "Toyota",
+    "placa": "LOP9873"
+  },
+  {
+    "id": 12,
+    "ano": "2021",
+    "modelo": "Compass",
+    "marca": "Jeep",
+    "placa": "GHT4568"
+  },
+  {
+    "id": 13,
+    "ano": "2015",
+    "modelo": "Hilux",
+    "marca": "Toyota",
+    "placa": "XYZ1234"
+  },
+  {
+    "id": 14,
+    "ano": "2019",
+    "modelo": "Renegade",
+    "marca": "Jeep",
+    "placa": "FGT7834"
+  },
+  {
+    "id": 15,
+    "ano": "2017",
+    "modelo": "Cruze",
+    "marca": "Chevrolet",
+    "placa": "JKL6785"
+  },
+  {
+    "id": 16,
+    "ano": "2020",
+    "modelo": "Onix Plus",
+    "marca": "Chevrolet",
+    "placa": "ABC5421"
+  },
+  {
+    "id": 17,
+    "ano": "2014",
+    "modelo": "Civic",
+    "marca": "Honda",
+    "placa": "MNO9321"
+  },
+  {
+    "id": 18,
+    "ano": "2018",
+    "modelo": "EcoSport",
+    "marca": "Ford",
+    "placa": "RST5498"
+  },
+  {
+    "id": 19,
+    "ano": "2022",
+    "modelo": "Argo",
+    "marca": "Fiat",
+    "placa": "UVW3269"
+  },
+  {
+    "id": 20,
+    "ano": "2013",
+    "modelo": "Duster",
+    "marca": "Renault",
+    "placa": "ZXC4157"
+  },
+  {
+    "id": 21,
+    "ano": "2016",
+    "modelo": "HR-V",
+    "marca": "Honda",
+    "placa": "VBN7654"
+  },
+  {
+    "id": 22,
+    "ano": "2021",
+    "modelo": "Virtus",
+    "marca": "Volkswagen",
+    "placa": "PLK3721"
+  },
+  {
+    "id": 23,
+    "ano": "2020",
+    "modelo": "T-Cross",
+    "marca": "Volkswagen",
+    "placa": "QAZ8475"
+  },
+  {
+    "id": 24,
+    "ano": "2019",
+    "modelo": "Toro",
+    "marca": "Fiat",
+    "placa": "WSX2364"
+  },
+  {
+    "id": 25,
+    "ano": "2023",
+    "modelo": "Pulse",
+    "marca": "Fiat",
+    "placa": "EDC1598"
   }
 ]
