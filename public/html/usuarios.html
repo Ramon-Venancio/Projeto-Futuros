@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoFix | Usuários</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/Usuarios.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <img class="Logo" src="../Assets/LOGO3-Photoroom.png" alt="Meu ZOVO">
+            <a class="navbar-brand" href="#">Oficina Express</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
+                    <li class="nav-item admin"><a class="nav-link" href="criarVeiculo.html">Veículos</a></li>
+                    <li class="nav-item admin"><a class="nav-link" href="Avarias.html">Avarias</a></li>
+                    <li class="nav-item admin"><a class="nav-link" href="Historico.html">Histórico</a></li>
+                    <li class="nav-item admin"><a href="usuarios.html" class="nav-link active">Usuários</a></li>
+                    <li class="nav-item ms-3"><button type="button" id="logout" class="btn btn-secondary">Logout</button></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="text-center mb-4">
+            <h2>Gestão de Usuários</h2>
+        </div>
+
+        <div class="text-center mb-4">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="userType" id="funcionarioRadio" checked onchange="toggleTable('funcionarios')">
+                <label class="form-check-label" for="funcionarioRadio">Funcionários Comuns</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="userType" id="adminRadio" onchange="toggleTable('administradores')">
+                <label class="form-check-label" for="adminRadio">Administradores</label>
+            </div>
+        </div>
+
+        <div id="funcionarios" class="card shadow mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4>Funcionários Comuns</h4>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addFuncionarioModal">Adicionar Funcionário</button>
+            </div>
+            <table class="table table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Cargo</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Funcionários -->
+                    <tr>
+                        <td>1</td>
+                        <td>João Silva</td>
+                        <td>joao@email.com</td>
+                        <td>Atendente</td>
+                        <td>
+                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editFuncionarioModal" onclick="editFuncionario(1, 'João Silva', 'joao@email.com', 'Atendente')">Editar</button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteFuncionario(1)">Excluir</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Maria Oliveira</td>
+                        <td>maria@email.com</td>
+                        <td>Recepcionista</td>
+                        <td>
+                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editFuncionarioModal" onclick="editFuncionario(2, 'Maria Oliveira', 'maria@email.com', 'Recepcionista')">Editar</button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteFuncionario(2)">Excluir</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="administradores" class="card shadow" style="display: none;">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4>Administradores</h4>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addAdminModal">Adicionar Administrador</button>
+            </div>
+            <table class="table table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Cargo</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Administradores -->
+                    <tr>
+                        <td>1</td>
+                        <td>Pedro Santos</td>
+                        <td>pedro@email.com</td>
+                        <td>Gerente</td>
+                        <td>
+                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editAdminModal" onclick="editAdmin(1, 'Pedro Santos', 'pedro@email.com', 'Gerente')">Editar</button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteAdmin(1)">Excluir</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Ana Costa</td>
+                        <td>ana@email.com</td>
+                        <td>Supervisora</td>
+                        <td>
+                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editAdminModal" onclick="editAdmin(2, 'Ana Costa', 'ana@email.com', 'Supervisora')">Editar</button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteAdmin(2)">Excluir</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal de Adicionar Administrador -->
+    <div class="modal fade" id="addAdminModal" tabindex="-1" aria-labelledby="addAdminModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addAdminModalLabel">Adicionar Administrador</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addAdminForm">
+                        <div class="mb-3">
+                            <label for="nomeAdmin" class="form-label">Nome</label>
+                            <input type="text" class="form-control" id="nomeAdmin" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="emailAdmin" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="emailAdmin" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cargoAdmin" class="form-label">Cargo</label>
+                            <input type="text" class="form-control" id="cargoAdmin" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Editar Administrador -->
+    <div class="modal fade" id="editAdminModal" tabindex="-1" aria-labelledby="editAdminModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editAdminModalLabel">Editar Administrador</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editAdminForm">
+                        <div class="mb-3">
+                            <label for="editNomeAdmin" class="form-label">Nome</label>
+                            <input type="text" class="form-control" id="editNomeAdmin" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editEmailAdmin" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="editEmailAdmin" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editCargoAdmin" class="form-label">Cargo</label>
+                            <input type="text" class="form-control" id="editCargoAdmin" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-3 mt-auto">
+        <div class="container">
+            <p>&copy; 2024 Oficina Express. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="../js/navbar.js"></script>
+    <script src="../js/Usuarios.js"></script>
+</body>
+</html>
