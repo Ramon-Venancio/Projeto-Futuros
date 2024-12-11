@@ -4,14 +4,12 @@
     "ano": "2018",
     "modelo": "Civic",
     "marca": "Honda",
-    "placa": "XYZ4F56"
-  },
-  {
-    "id": 3,
-    "ano": "2021",
-    "modelo": "Compass",
-    "marca": "Jeep",
-    "placa": "LMN7G89"
+    "placa": "XYZ4F56",
+    "avarias": [
+      1,
+      4,
+      5
+    ]
   },
   {
     "id": 4,
@@ -102,7 +100,11 @@
     "ano": "2020",
     "modelo": "Onix Plus",
     "marca": "Chevrolet",
-    "placa": "ABC5421"
+    "placa": "ABC5421",
+    "avarias": [
+      3,
+      8
+    ]
   },
   {
     "id": 17,
@@ -158,7 +160,12 @@
     "ano": "2019",
     "modelo": "Toro",
     "marca": "Fiat",
-    "placa": "WSX2364"
+    "placa": "WSX2364",
+    "avarias": [
+      2,
+      6,
+      7
+    ]
   },
   {
     "id": 25,

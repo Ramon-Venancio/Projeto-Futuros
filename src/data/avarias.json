@@ -1,1 +1,66 @@
-[]
+[
+  {
+    "id": 1,
+    "idVeiculo": 2,
+    "placa": "XYZ4F56",
+    "localizacao": "traseira",
+    "descricao": "Vidro quebrado",
+    "data": "2025-02-12"
+  },
+  {
+    "id": 2,
+    "idVeiculo": 24,
+    "placa": "WSX2364",
+    "localizacao": "bancos",
+    "descricao": "Bancos rasgados",
+    "data": "2024-10-20"
+  },
+  {
+    "id": 3,
+    "idVeiculo": 16,
+    "placa": "ABC5421",
+    "localizacao": "motor",
+    "descricao": "Motor danificado",
+    "data": "2026-02-12"
+  },
+  {
+    "id": 4,
+    "idVeiculo": 2,
+    "placa": "XYZ4F56",
+    "localizacao": "frontal",
+    "descricao": "Para-choque amassado",
+    "data": "2025-02-20"
+  },
+  {
+    "id": 5,
+    "idVeiculo": 2,
+    "placa": "XYZ4F56",
+    "localizacao": "freios",
+    "descricao": "Quebrados",
+    "data": "2025-01-12"
+  },
+  {
+    "id": 6,
+    "idVeiculo": 24,
+    "placa": "WSX2364",
+    "localizacao": "lateral direita",
+    "descricao": "Porta amassada",
+    "data": "2024-10-19"
+  },
+  {
+    "id": 7,
+    "idVeiculo": 24,
+    "placa": "WSX2364",
+    "localizacao": "traseira",
+    "descricao": "Lanterna quebrada",
+    "data": "2024-10-18"
+  },
+  {
+    "id": 8,
+    "idVeiculo": 16,
+    "placa": "ABC5421",
+    "localizacao": "painel",
+    "descricao": "Quebrado",
+    "data": "2026-02-12"
+  }
+]
