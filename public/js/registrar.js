@@ -2,8 +2,6 @@ document.getElementById('registerForm').addEventListener('submit', async (event)
     console.log("entrou")
     event.preventDefault(); // Evita o recarregamento da página
 
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirmPassword').value;
 
@@ -12,12 +10,16 @@ document.getElementById('registerForm').addEventListener('submit', async (event)
         return;
     }
 
-    console.log(name,email,password)
+    usuario = {
+        username: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        password
+    }
     try {
         const response = await fetch('http://localhost:3000/api/usuarios', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, email, password }),
+            body: JSON.stringify(usuario),
         });
 
         if (response.ok) {

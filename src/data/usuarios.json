@@ -9,36 +9,16 @@
   },
   {
     "id": 2,
-    "username": "",
-    "password": "$2a$10$.d/hx77tNIwPAb7MkV825.Q2F71b0KLkzlIpXBaYpQT7NwIyke8W2",
-    "email": "ramonito@gmail.com",
+    "username": "Pedrinho",
+    "email": "pedrinho32@grau.com",
+    "password": "$2a$10$ghVaJpsttbzdz/BphlQxXOXMuEd3o1YliYU1oXlUjB1Cn8e4W/xFW",
     "role": "funcionario"
   },
   {
     "id": 3,
-    "username": "vinan",
-    "password": "$2a$10$JO7mNImctVtg3U1mEm6vfOUJ2LZRVb.nJMJULNmOI7/pKoV.o4/6W",
-    "email": "vinan@gmail.com",
-    "role": "funcionario"
-  },
-  {
-    "id": 4,
-    "name": "Lobito",
-    "email": "lobinho@gmail.com",
-    "password": "$2a$10$p1dUSgaAeKVTkvPrEuANQOVW.OSomJuWmTiXgvIvvhxZuy9VCEsYm"
-  },
-  {
-    "id": 5,
-    "name": "minato",
-    "email": "naruti@gmail.com",
-    "password": "$2a$10$BAzWDSOyV9siLVzGAg71/e..V28LEhenz8SuunJwwQlz40Z4hZ.6G",
-    "role": "funcionarios"
-  },
-  {
-    "id": 6,
-    "name": "rodrigo",
-    "email": "meuzovo123@hotmalil.com",
-    "password": "$2a$10$2w8vBo.5Viu6O5AeAllzOu/35jrxpc2Tt.e/dDo.0y7ajUdC/mbD2",
+    "username": "rodrigo",
+    "email": "rodrigo@gmail.com",
+    "password": "$2a$10$V4WAlAsxE71i0JfNV7w30uTxMP6dfdfpD6FNLNlwO8UtujqBXak4u",
     "role": "funcionario"
   }
 ]

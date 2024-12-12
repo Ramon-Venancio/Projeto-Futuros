@@ -120,13 +120,15 @@ const usersController = {
     update: async (req, res) => {
         try {
             const id = parseInt(req.params.id)
-            const novosDados = req.body
+            let novosDados = req.body
             const usuarios = await listarUsuarios()
             const index = usuarios.findIndex(u => u.id === id)
 
             if (index === -1) {
                 return res.status(404).json({ error: 'Usuário não encontrado' })
             }
+
+            novosDados.password = await bcrypt.hash(String(novoUsuario.password), 10)
 
             usuarios[index] = { ...usuarios[index], ...novosDados }
 

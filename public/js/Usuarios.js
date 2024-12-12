@@ -1,20 +1,31 @@
-let usuarios = [];
+let usuarios = '';
+const token = localStorage.getItem("authToken")
+
+// Carregar os dados quando a página é carregada
+window.onload = function () {
+    carregarUsuarios();
+    toggleTable('funcionarios');  // Exibe os funcionários por padrão
+};
 
 // Função para carregar os dados do arquivo usuarios.json
-function carregarUsuarios() {
-    fetch('usuarios.json')  // Alterar para o caminho correto se necessário
-        .then(response => response.json())
-        .then(data => {
-            usuarios = data;  // Armazena os dados carregados
-            exibirUsuarios(); // Exibe os dados nas tabelas
-        })
-        .catch(error => console.error('Erro ao carregar os dados:', error));
+async function carregarUsuarios() {
+    const response = await fetch('http://localhost:3000/api/usuarios', {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        }
+    })
+
+    usuarios = await response.json()
+
+    exibirUsuarios()
 }
 
 // Função para exibir os usuários nas tabelas de funcionários e administradores
 function exibirUsuarios() {
-    const funcionariosTableBody = document.querySelector('#funcionarios tbody');
-    const administradoresTableBody = document.querySelector('#administradores tbody');
+    const funcionariosTableBody = document.getElementById('funcionarioCorpoTabela');
+    const administradoresTableBody = document.getElementById('administradoresCorpoTabela');
 
     // Limpa as tabelas antes de adicionar os dados
     funcionariosTableBody.innerHTML = '';
@@ -26,30 +37,27 @@ function exibirUsuarios() {
 
     // Preencher a tabela de funcionários
     funcionarios.forEach(user => {
+        console.log(user)
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${user.id}</td>
             <td>${user.username}</td>
             <td>${user.email}</td>
-            <td>${user.role}</td>
             <td>
-                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editFuncionarioModal" onclick="editFuncionario(${user.id}, '${user.username}', '${user.email}', '${user.role}')">Editar</button>
+                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editFuncionarioModal" onclick="editUsuario(${user.id})">Editar</button>
                 <button class="btn btn-danger btn-sm" onclick="deleteFuncionario(${user.id})">Excluir</button>
             </td>
         `;
         funcionariosTableBody.appendChild(row);
-    });
+    })
 
     // Preencher a tabela de administradores
     administradores.forEach(user => {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${user.id}</td>
             <td>${user.username}</td>
             <td>${user.email}</td>
-            <td>${user.role}</td>
             <td>
-                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editAdminModal" onclick="editAdmin(${user.id}, '${user.username}', '${user.email}', '${user.role}')">Editar</button>
+                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editFuncionarioModal" onclick="editUsuario(${user.id})">Editar</button>
                 <button class="btn btn-danger btn-sm" onclick="deleteAdmin(${user.id})">Excluir</button>
             </td>
         `;
@@ -61,7 +69,7 @@ function exibirUsuarios() {
 function toggleTable(userType) {
     const funcionariosTable = document.getElementById('funcionarios');
     const administradoresTable = document.getElementById('administradores');
-    
+
     if (userType === 'funcionarios') {
         funcionariosTable.style.display = 'block';
         administradoresTable.style.display = 'none';
@@ -124,13 +132,61 @@ function addAdmin() {
 }
 
 // Função para editar um funcionário
-function editFuncionario(id, nome, email, cargo) {
-    document.getElementById('editNomeFuncionario').value = nome;
-    document.getElementById('editEmailFuncionario').value = email;
-    document.getElementById('editCargoFuncionario').value = cargo;
+// Função para editar um usuário
+function editUsuario(userId) {
+    const usuario = usuarios.find(user => user.id === userId); // Encontre o usuário pelo ID
+    console.log(usuario);
+    document.getElementById('name').value = usuario.username;
+    document.getElementById('email').value = usuario.email;
 
-    // Salvar a ID do funcionário no formulário de edição para atualizá-lo
-    document.getElementById('editFuncionarioId').value = id;
+    const modalElement = document.getElementById('usuarioModal');
+    const modalInstance = new bootstrap.Modal(modalElement);    
+    modalInstance.show();
+
+    document.getElementById('tituloModal').innerHTML = `Editar ${usuario.role}`;
+    document.getElementById('usuarioForm').onsubmit = async (event) => {
+        event.preventDefault();
+
+        const newPassword = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        if (newPassword !== confirmPassword) {
+            alert('As senhas não coincidem!');
+            return;
+        }
+
+        const updatedUsuario = {
+            username: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            password: newPassword,
+        };
+
+        try {
+            const response = await fetch(`http://localhost:3000/api/usuarios/${usuario.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(updatedUsuario),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                alert(`Erro: ${errorData.error}`);
+                return;
+            }
+
+            modalInstance.hide();
+
+            alert('Usuário atualizado com sucesso!');
+            carregarUsuarios();
+
+        } catch (err) {
+            console.error(err);
+            alert('Erro ao conectar ao servidor');
+        }
+    };
 }
 
 // Função para salvar as edições do funcionário
@@ -160,16 +216,6 @@ function saveFuncionario() {
 function deleteFuncionario(id) {
     usuarios = usuarios.filter(user => user.id !== id);
     exibirUsuarios();
-}
-
-// Função para editar um administrador
-function editAdmin(id, nome, email, cargo) {
-    document.getElementById('editNomeAdmin').value = nome;
-    document.getElementById('editEmailAdmin').value = email;
-    document.getElementById('editCargoAdmin').value = cargo;
-
-    // Salvar a ID do administrador no formulário de edição para atualizá-lo
-    document.getElementById('editAdminId').value = id;
 }
 
 // Função para salvar as edições do administrador
@@ -210,9 +256,3 @@ function limparFormulario() {
     document.getElementById('emailAdmin').value = '';
     document.getElementById('cargoAdmin').value = '';
 }
-
-// Carregar os dados quando a página é carregada
-window.onload = function() {
-    carregarUsuarios();
-    toggleTable('funcionarios');  // Exibe os funcionários por padrão
-};
