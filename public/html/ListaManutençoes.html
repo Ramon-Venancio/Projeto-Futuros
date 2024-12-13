@@ -4,48 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Histórico de Manutenção</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Link para o Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/Historico.css">
     <link rel="stylesheet" href="../css/style.css">
-
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="gato container-fluid">
-          
-          <img class="Logo" src="../Assets/LOGO3-Photoroom.png" alt="Meu ZOVO">
-          <a class="slime navbar-brand" href="#">Oficina Express</a>
-    
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-              <li class="nav-item">
-                <a class="nav-link " href="home.html">Home</a>
-              </li>
-              <li class="nav-item admin">
-                <a class="nav-link " href="criarVeiculo.html">Veículos</a>
-              </li>
-              <li class="nav-item admin">
-                <a class="nav-link" href="Avarias.html">Avarias</a>
-              </li>
-              <li class="nav-item admin">
-                <a class="nav-link" href="Historico.html">Historico</a>
-              </li>
-              <li class="nav-item admin">
-                <a href="usuarios.html" class="nav-link">Usuarios</a>
-              </li>
-              <li class="nav-item ms-3">
-                <button type="button" id="logout" class="btn btn-secondary">Logout</button>
-              </li>
-            </ul>
-          </div>
+        <div class="container-fluid">
+            <img class="Logo" src="../Assets/LOGO3-Photoroom.png" alt="Meu ZOVO">
+            <a class="navbar-brand" href="#">Oficina Express</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">Home</a>
+                    </li>
+                    <li class="nav-item admin">
+                        <a class="nav-link" href="criarVeiculo.html">Veículos</a>
+                    </li>
+                    <li class="nav-item admin">
+                        <a class="nav-link" href="Avarias.html">Avarias</a>
+                    </li>
+                    <li class="nav-item admin">
+                        <a class="nav-link" href="Historico.html">Historico</a>
+                    </li>
+                    <li class="nav-item admin">
+                        <a href="usuarios.html" class="nav-link">Usuarios</a>
+                    </li>
+                    <li class="nav-item ms-3">
+                        <button type="button" id="logout" class="btn btn-secondary">Logout</button>
+                    </li>
+                </ul>
+            </div>
         </div>
-      </nav>
+    </nav>
+
     <main class="container my-5">
         <h1>Histórico de Manutenção</h1>
         <div class="search-bar">
@@ -65,12 +62,12 @@
                                 </h5>
                                 <div class="status-wrapper">
                                     <span class="status pendente">Pendente</span>
-                                    <button class="accordion-btn" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">v</button>
+                                    <button class="accordion-btn" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">v</button>
                                 </div>
                             </div>
                         </div>
 
-                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion1">
+                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-bs-parent="#accordion1">
                             <div class="card-body">
                                 <ul>
                                     <li>Avaria 1</li>
@@ -97,12 +94,12 @@
                                 </h5>
                                 <div class="status-wrapper">
                                     <span class="status concluido">Concluído</span>
-                                    <button class="accordion-btn" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">v</button>
+                                    <button class="accordion-btn" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">v</button>
                                 </div>
                             </div>
                         </div>
 
-                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion2">
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion2">
                             <div class="card-body">
                                 O mecânico calibrou os freios e trocou o selo de freio do fusca.
                             </div>
@@ -124,12 +121,12 @@
                                 </h5>
                                 <div class="status-wrapper">
                                     <span class="status pendente">Pendente</span>
-                                    <button class="accordion-btn" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">v</button>
+                                    <button class="accordion-btn" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">v</button>
                                 </div>
                             </div>
                         </div>
 
-                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion3">
+                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-bs-parent="#accordion3">
                             <div class="card-body">
                                 Avarias não especificadas.
                             </div>
@@ -151,12 +148,12 @@
                                 </h5>
                                 <div class="status-wrapper">
                                     <span class="status pendente">Pendente</span>
-                                    <button class="accordion-btn" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">v</button>
+                                    <button class="accordion-btn" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">v</button>
                                 </div>
                             </div>
                         </div>
 
-                        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion4">
+                        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-bs-parent="#accordion4">
                             <div class="card-body">
                                 Avarias não especificadas.
                             </div>
@@ -166,10 +163,12 @@
             </div>
         </div>
     </main>
+    <footer>
+        &copy; 2024 Histórico de Manutenção. Todos os direitos reservados.
+    </footer>
 
-    <!-- Link para o Bootstrap JS e dependências -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <!-- Link para o Bootstrap JS e dependências (já incluído no bundle) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/navbar.js"></script>
 </body>
 </html>

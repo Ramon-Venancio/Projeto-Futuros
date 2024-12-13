@@ -1,0 +1,114 @@
+main {
+    flex: 1;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.search-bar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.search-bar input {
+    width: 50%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.maintenance-list {
+    display: flex;
+    flex-direction: column; /* Para empilhar os itens verticalmente */
+    gap: 20px; /* Espaçamento entre os itens */
+}
+
+.maintenance-item {
+    background: none; /* Remover fundo branco */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 0.9em; /* Ajuste do tamanho da fonte */
+}
+
+.status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.status.pendente {
+    background-color: #ffcccc;
+    color: #d9534f;
+}
+
+.status.concluido {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+
+
+.maintenance-item .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.maintenance-item h5 {
+    margin-bottom: 0;
+    font-size: 0.9em; /* Ajuste do tamanho da fonte do nome do item */
+    color: #333; /* Cor do texto mais preta */
+}
+
+.maintenance-item .status {
+    margin-left: 10px;
+}
+
+/* Ajustando o acordeão para o tamanho correto */
+.card-body {
+    padding: 0.5rem;
+    font-size: 0.8em;
+}
+
+.card-header {
+    padding: 0.3rem 1rem;
+}
+
+/* Estilo para o botão de expandir/recolher */
+.accordion-btn {
+    font-size: 1.5em;
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 10px; /* Garantindo a distância entre o status e o botão */
+}
+
+.accordion-btn:focus {
+    outline: none;
+}
+
+/* Novo estilo para garantir que o status e o botão fiquem à direita */
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.status-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.status-wrapper .status {
+    margin-right: 10px; /* Espaçamento entre o status e o botão de acordeão */
+}
