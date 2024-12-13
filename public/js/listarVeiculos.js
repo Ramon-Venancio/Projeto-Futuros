@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // Função para exibir veículos na tabela
 function popularTabela(data, start = 0, limit = itemsPerPage) {
-    console.log("entrou no xibiu")
     const slice = data.slice(start, start + limit);
     slice.forEach((veiculo, index) => {
         const row = `
@@ -53,7 +52,6 @@ async function carregarVeiculos() {
 
         veiculos = await response.json();
 
-        console.log("Passirinho voou")
         if (veiculos.length < itemsPerPage) {
             loadMoreButton.style.display = "none"
         }
