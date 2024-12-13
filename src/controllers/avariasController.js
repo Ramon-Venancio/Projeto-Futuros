@@ -32,7 +32,7 @@ const avariasController = {
             const veiculos = await listarVeiculos()
             const avarias = await listarAvarias()
 
-            let veiculo = veiculos.find(v => v.id === idVeiculo)
+            const veiculo = veiculos.find(v => v.id === idVeiculo)
 
             if (!veiculo) {
                 return res.status(404).json({ error: 'Veiculo não existente nos dados!' })
