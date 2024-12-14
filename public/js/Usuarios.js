@@ -81,6 +81,12 @@ function toggleTable(userType) {
 // Função para adicionar um novo funcionário
 function addFuncionario() {
     const modalElement = document.getElementById('usuarioModal');
+
+    document.getElementById('name').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('password').value = ''
+    document.getElementById('confirmPassword').value = ''
+
     const modalInstance = new bootstrap.Modal(modalElement);
     modalInstance.show();
 
@@ -136,6 +142,12 @@ function addFuncionario() {
 
 function addAdmin() {
     const modalElement = document.getElementById('usuarioModal');
+
+    document.getElementById('name').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('password').value = ''
+    document.getElementById('confirmPassword').value = ''
+    
     const modalInstance = new bootstrap.Modal(modalElement);
     modalInstance.show();
 
@@ -194,6 +206,8 @@ function editUsuario(userId) {
     const usuario = usuarios.find(user => user.id === userId); // Encontre o usuário pelo ID
     document.getElementById('name').value = usuario.username;
     document.getElementById('email').value = usuario.email;
+    document.getElementById('password').value = ''
+    document.getElementById('confirmPassword').value = ''
 
     const modalElement = document.getElementById('usuarioModal');
     const modalInstance = new bootstrap.Modal(modalElement);

@@ -10,36 +10,43 @@
   {
     "id": 2,
     "username": "Pedro",
-    "email": "pedrinho32@grau.com",
-    "password": "$2a$10$a2JEfmOoLIapNjdEbWfRkOxBAGKwee0Puihv.GLojkG.ac8Z6eOxC",
-    "role": "funcionario"
-  },
-  {
-    "id": 4,
-    "username": "ramonito",
-    "email": "ramon@gmail.com",
-    "password": "$2a$10$a6JpLfpwgHBFI6dH54pBUe0UBMa1QsvqdIMBMsoCiJVmO8MlYWdzC",
+    "email": "pedro@grau.com",
+    "password": "$2a$10$xwn2.HXyLrFvQYZOsHBGMeQuwbEnRg5Mc0MeKWGMxVWf0vAkSJf9.",
     "role": "funcionario"
   },
   {
     "id": 5,
-    "username": "Felipe",
-    "email": "felipe@gmail.com",
-    "password": "$2a$10$Q3R12kZVd.pSq0atbeX.OeE1gdbzvmelG1LgNOt4RECWy9fd4ZjIi",
+    "username": "Felipes",
+    "email": "felipes@gmail.com",
+    "password": "$2a$10$C6f20IUoW0PPGz8HqyZhoepKNUZ2RCMlIZF6INH2a8jj63A7wU1ey",
     "role": "funcionario"
   },
   {
     "id": 6,
     "username": "João",
     "email": "joao@gmail.com",
-    "password": "$2a$10$/Vk4dOUyM.iDNc3QgegEIuhuvI77ICUk/KkXP7yaOPZPXW9Sw0cUa",
+    "password": "$2a$10$BhBLgGM8XEdgriWz4iLGt.HFWdmNdQ9dRA5lIquvBBEhyN7UMm/.u",
     "role": "funcionario"
   },
   {
     "id": 7,
     "username": "Mac Lovin",
-    "password": "$2a$10$ZoRO7KvK2SC0zxeEHoFh0OTA3EUeATJr1ObNpsF3HuNZdithW8smi",
-    "email": "hawaino@gmail.com",
+    "password": "$2a$10$T9wKtVdSqWLBmhZxNFLPUuTxXJZTf1jAiVhnaWJ1uxpj3QIghNIRy",
+    "email": "maclovin@gmail.com",
     "role": "admin"
+  },
+  {
+    "id": 8,
+    "username": "Ruan",
+    "email": "ruan@gmail.com",
+    "password": "$2a$10$.KDwRjSfDSMibJA5J5AEkONr3ZI1sUYN4lOKTyVc6rULyu8DmbYve",
+    "role": "funcionario"
+  },
+  {
+    "id": 9,
+    "username": "Levy",
+    "email": "levy@gmail.com",
+    "password": "$2a$10$J5wrMrTLJKK.DFzKC9GzsO7yU9xbc3UaV.SG659pdN0XN2A8VS0sK",
+    "role": "funcionario"
   }
 ]

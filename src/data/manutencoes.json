@@ -1,24 +1,21 @@
 [
   {
     "id": 1,
-    "idVeiculo": 2,
+    "idVeiculo": 16,
     "idAvarias": [
-      1,
-      4,
-      5
+      1
     ],
-    "data": "2025-03-15",
+    "data": "2024-12-22",
     "finalizado": false
   },
   {
     "id": 2,
-    "idVeiculo": 24,
+    "idVeiculo": 1,
     "idAvarias": [
-      2,
-      6,
-      7
+      3,
+      4
     ],
-    "data": "2024-12-15",
+    "data": "2024-12-31",
     "finalizado": false
   }
 ]

@@ -1,15 +1,21 @@
 [
   {
-    "id": 2,
-    "ano": "2018",
+    "id": 1,
+    "ano": "2019",
     "modelo": "Civic",
-    "marca": "Honda",
-    "placa": "XYZ4F56",
+    "marca": "Hond",
+    "placa": "ERT7H43",
     "avarias": [
-      1,
-      4,
-      5
+      3,
+      4
     ]
+  },
+  {
+    "id": 3,
+    "ano": "2017",
+    "modelo": "HB20",
+    "marca": "Hyundai",
+    "placa": "DAC4V53"
   },
   {
     "id": 4,
@@ -79,7 +85,10 @@
     "ano": "2015",
     "modelo": "Hilux",
     "marca": "Toyota",
-    "placa": "XYZ1234"
+    "placa": "XYZ1234",
+    "avarias": [
+      2
+    ]
   },
   {
     "id": 14,
@@ -102,8 +111,7 @@
     "marca": "Chevrolet",
     "placa": "ABC5421",
     "avarias": [
-      3,
-      8
+      1
     ]
   },
   {
@@ -160,12 +168,7 @@
     "ano": "2019",
     "modelo": "Toro",
     "marca": "Fiat",
-    "placa": "WSX2364",
-    "avarias": [
-      2,
-      6,
-      7
-    ]
+    "placa": "WSX2364"
   },
   {
     "id": 25,
@@ -173,5 +176,12 @@
     "modelo": "Pulse",
     "marca": "Fiat",
     "placa": "EDC1598"
+  },
+  {
+    "id": 26,
+    "ano": "2019",
+    "modelo": "Corolla",
+    "marca": "Toyota",
+    "placa": "ABC1D45"
   }
 ]

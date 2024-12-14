@@ -46,6 +46,7 @@ const manutencoesController = {
         try {
             const id = parseInt(req.params.id, 10)
             const novosDados = req.body
+            console.log(id)
 
             const manutencoes = await listarManutencoes()
             const index = manutencoes.findIndex((a) => a.id === id)
