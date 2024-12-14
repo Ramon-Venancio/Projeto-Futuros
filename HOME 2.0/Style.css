@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+.Logo{
+        font-family: "Roboto", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+      
+}
+
+
+.Tela{
+        width: auto;
+        height: 25vh;
+}
+
+.nav-link{
+        margin-right: 12px;
+}
+
+button:hover{
+        transition: 0.5s;
+padding: 10px 20px;
+}
+
+header{
+        background-image: url(https://static.vecteezy.com/ti/vetor-gratis/p1/9264605-cartoon-cidade-rua-com-carro-cidade-construindo-ao-lado-da-estrada-estrada-pronto-para-animacao-2d-fundo-de-animacao-colorida-de-cartoon-gratis-vetor.jpg);
+        background-size: contain;
+        background-position: center;
+        background-repeat: repeat;
+        height: 250px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+}
+
+body{
+        border-left: 18px solid #212529;
+        border-right: 18px solid #212529;
+        background: linear-gradient(to right, #81D4FA, #1565C0);
+        background-size: cover;
+        min-height: 100vh;
+}
+
+.LOGO{
+max-width: 4rem;
+max-height: 4rem;
+}
+
+.navbar-brand{
+        margin-left: 20px;
+}
