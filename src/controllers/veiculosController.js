@@ -1,9 +1,9 @@
-import { listarVeiculos, salvarVeiculos } from "../models/veiculosModel.js";
+import Veiculo from "../models/veiculosModel.js";
 
 const veiculosController = {
     index: async (req, res) => {
         try {
-            const veiculos = await listarVeiculos()
+            const veiculos = await Veiculo.find()
             res.json(veiculos)
         } catch (error) {
             res.status(500).json({ error: 'Erro ao listar veículos' })
@@ -48,18 +48,10 @@ const veiculosController = {
     },
     create: async (req, res) => {
         try {
-            let novoVeiculo = req.body
-            const veiculos = await listarVeiculos()
+            const novoVeiculo = new Veiculo (req.body)
+            const veiculoSalvo = await novoVeiculo.save()
 
-            novoVeiculo = {
-                id: veiculos.length > 0 ? veiculos[veiculos.length - 1].id + 1 : 1,
-                ...novoVeiculo
-            }
-            
-            veiculos.push(novoVeiculo)
-
-            await salvarVeiculos(veiculos)
-            res.status(201).json(novoVeiculo)
+            res.status(201).json(veiculoSalvo)
         } catch (error) {
             res.status(500).json({ error: 'Erro ao adicionar veículo' })
         }

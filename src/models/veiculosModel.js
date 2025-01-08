@@ -1,27 +1,12 @@
-import fs from 'fs'
-import path from 'path'
-import { fileURLToPath } from 'url'
+import mongoose from 'mongoose'
+const VeiculoSchema = new mongoose.Schema({
+    placa: { type: String, required: true, unique: true },
+    modelo: { type: String, required: true },
+    marca: { type: String, required: true },
+    ano: { type: Number, required: true },
+    status: { type: String, default: 'Disponível' },
+})
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+const Veiculo = mongoose.model('Veiculo', VeiculoSchema)
 
-const caminhoArquivo = path.join(__dirname, '..', 'data', 'veiculos.json')
-
-export const listarVeiculos = async () => {
-    try {
-        const dados = await fs.promises.readFile(caminhoArquivo, 'utf8')
-        return JSON.parse(dados)
-    } catch (error) {
-        console.error(`Erro ao ler o arquivo de veículos: ${error}`)
-        return []
-    }
-}
-
-export const salvarVeiculos = async (veiculos) => {
-    try {
-        await fs.promises.writeFile(caminhoArquivo, JSON.stringify(veiculos, null, 2))
-    } catch (error) {
-        console.error(`Erro ao salvar o veículo: ${error}`)
-        throw new Error('Erro ao salvar o veículo')
-    }
-}
+export default Veiculo
