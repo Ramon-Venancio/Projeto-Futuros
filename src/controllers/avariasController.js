@@ -1,5 +1,4 @@
 import { listarAvarias, salvarAvarias } from "../models/avariasModel.js";
-import { listarVeiculos } from "../models/veiculosModel.js";
 
 const avariasController = {
     index: async (req, res) => {

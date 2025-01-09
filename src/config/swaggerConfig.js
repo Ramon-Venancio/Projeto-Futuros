@@ -43,6 +43,10 @@ const swaggerOptions = {
                         ultima_manuntencao: {
                             type: 'string',
                             example: "2028-10-13"
+                        },
+                        status: {
+                            type: 'string',
+                            example: 'Disponivel'
                         }
                     },
                 },

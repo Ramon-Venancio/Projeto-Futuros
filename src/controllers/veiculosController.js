@@ -12,43 +12,25 @@ const veiculosController = {
     indexFind: async (req, res) => {
         try {
             const parametro = req.params.parametro
-            const veiculos = await listarVeiculos()
-
-            if (!isNaN(parametro)) {
-                const id = parseInt(parametro)
-                const veiculo = veiculos.find(v => v.id === id)
-                if (!veiculo) {
-                    return res.status(400).json({ error: 'Veículo não encontrado' })
-                }
-
-                res.json(veiculo)
+            let veiculo;
+            if (/^[0-9a-fA-F]{24}$/.test(parametro)) {
+                // Verificar se é um ID válido do MongoDB
+                veiculo = await Veiculo.findById(parametro);
+            } else if (/^[A-Z]{3}-\d{4}$/.test(parametro.toUpperCase())) {
+                // Buscar por placa
+                veiculo = await Veiculo.findOne({ placa: parametro.toUpperCase() });
+            } else {
+                return res.status(404).json({ error: 'Veículo não encontrado' })
             }
-            else if (/^[A-Z]{3}-\d{4}$/.test(parametro.toUpperCase())) {
-                const placa = parametro.toUpperCase();
-                const veiculo = veiculos.find(veiculo => veiculo.placa === placa);
-                if (!veiculo) {
-                    return res.status(400).json({ error: 'Veículo não encontrado' })
-                }
 
-                res.json(veiculo)
-            }
-            else {
-                const modelo = parametro.toLowerCase();
-                const veiculosModelo = veiculos.filter(veiculo => veiculo.modelo.toLowerCase() === modelo)
-                if (!veiculosModelo) {
-                    return res.status(400).json({ error: 'Veículo não encontrado' })
-                }
-
-                res.json(veiculosModelo)
-            }
-    
+            res.json(veiculo)
         } catch (error) {
             res.status(500).json({ error: 'Erro ao listar veículo' })
         }
     },
     create: async (req, res) => {
         try {
-            const novoVeiculo = new Veiculo (req.body)
+            const novoVeiculo = new Veiculo(req.body)
             const veiculoSalvo = await novoVeiculo.save()
 
             res.status(201).json(veiculoSalvo)
@@ -60,50 +42,40 @@ const veiculosController = {
         try {
             const id = parseInt(req.params.id)
             const novosDados = req.body
-    
-            let veiculos = await listarVeiculos()
-            const index = veiculos.findIndex(v => v.id === id)
-    
-            if (index === -1) {
+
+            const veiculoAtualizado = await Veiculo.findByIdAndUpdate(id, novosDados, {
+                new: true, // Retorna o documento atualizado
+                runValidators: true // Garante que as validações do modelo sejam aplicadas
+            })
+
+            if (!veiculoAtualizado) {
                 return res.status(404).json({ error: 'Veiculo não encontrado' })
             }
-    
-            veiculos[index] = {...veiculos[index], ...novosDados}
-    
-    
-            await salvarVeiculos(veiculos)
-            res.json(veiculos[index])
+
+            res.json(veiculoAtualizado)
         } catch (error) {
             res.status(500).json({ error: 'Erro ao atualizar veículo' })
         }
     },
     delete: async (req, res) => {
         try {
-            let veiculos = await listarVeiculos()
-        
-            veiculos.length = 0
-        
-            await salvarVeiculos(veiculos)
-            res.json('Banco de dados deletado com sucesso.')
+            await Veiculo.deleteMany()
+
+            res.json({ message: 'Todos os veículos foram deletados com sucesso.' })
         } catch (error) {
-            res.status(500).json({ error: 'Erro ao deletar o banco de dados'})
+            res.status(500).json({ error: 'Erro ao deletar o banco de dados' })
         }
     },
     deleteID: async (req, res) => {
         try {
             const id = parseInt(req.params.id)
-            
-            let veiculos = await listarVeiculos()
-            const index = veiculos.findIndex(v => v.id === id)
-        
-            if (index === -1) {
+
+            const veiculoRemovido = await Veiculo.findByIdAndDelete(id)
+
+            if (!veiculoRemovido) {
                 return res.status(404).json({ error: 'Veiculo não encontrado' })
             }
-        
-    
-            const veiculoRemovido = veiculos.splice(index,1)
-        
-            await salvarVeiculos(veiculos)
+            
             res.json(veiculoRemovido)
         } catch (error) {
             res.status(500).json({ error: 'Erro ao deletar veiculo' })
