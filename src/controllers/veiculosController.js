@@ -40,14 +40,14 @@ const veiculosController = {
     },
     update: async (req, res) => {
         try {
-            const id = parseInt(req.params.id)
+            const id = req.params.id
             const novosDados = req.body
 
             const veiculoAtualizado = await Veiculo.findByIdAndUpdate(id, novosDados, {
                 new: true, // Retorna o documento atualizado
                 runValidators: true // Garante que as validações do modelo sejam aplicadas
             })
-
+            
             if (!veiculoAtualizado) {
                 return res.status(404).json({ error: 'Veiculo não encontrado' })
             }

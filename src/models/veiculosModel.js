@@ -5,7 +5,7 @@ const VeiculoSchema = new mongoose.Schema({
     modelo: { type: String, required: true },
     marca: { type: String, required: true },
     ano: { type: Number, required: true },
-    status: { type: String, default: 'Disponível' },
+    data_de_manutencao: { type: Date, default: null, },
 })
 
 const Veiculo = mongoose.model('Veiculo', VeiculoSchema)
