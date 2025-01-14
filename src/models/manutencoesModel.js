@@ -1,27 +1,14 @@
-import fs from 'fs'
-import path from 'path'
-import { fileURLToPath} from 'url'
+const mongoose = require('mongoose');
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+// Definindo o schema para Manutencao
+const manutencaoSchema = new mongoose.Schema({
+     idVeiculo: { type: mongoose.Schema.Types.ObjectId, ref: 'Veiculo', required: true, },
+     idAvarias: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Avaria', required: true} ],
+     data: { type: Date, required: true },
+     finalizado: { type: Boolean, default: false, },
+});
 
-const caminhoArquivo = path.join(__dirname, '..', 'data', 'manutencoes.json')
+// Criando o modelo Manutencao com o schema
+const Manutencao = mongoose.model('Manutencao', manutencaoSchema);
 
-export const listarManutencoes = async () => {
-     try {
-          const dados = await fs.promises.readFile(caminhoArquivo, 'utf8')
-          return JSON.parse(dados)
-     } catch (error) {
-          console.error(`Error ao ler o arquivo de manutencções: ${error}`)
-          return []
-     }
-}
-
-export const salvarManutencoes = async (manutencoes) => {
-     try {
-          await fs.promises.writeFile(caminhoArquivo, JSON.stringify(manutencoes, null, 2))
-     } catch (error) {
-          console.error(`Erro ao salvar a manutenção: ${error}`)
-          throw new Error('Erro ao salvar a manutenção')
-     }
-}
+export default Manutencao

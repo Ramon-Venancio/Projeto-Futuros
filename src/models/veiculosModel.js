@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 
+// Modelo de veículo
 const VeiculoSchema = new mongoose.Schema({
     placa: { type: String, required: true, unique: true },
     modelo: { type: String, required: true },

@@ -1,9 +1,9 @@
-import { listarAvarias, salvarAvarias } from "../models/avariasModel.js";
+import Avaria from '../models/avariasModel.js'
 
 const avariasController = {
     index: async (req, res) => {
         try {
-            const avarias = await listarAvarias()
+            const avarias = await Avaria.find()
             res.json(avarias)
         } catch (error) {
             res.status(500).json({ error: 'Erro ao listar avarias' })
@@ -11,9 +11,16 @@ const avariasController = {
     },
     indexID: async (req, res) => {
         try {
-            const id = parseInt(req.params.id)
-            const avarias = await listarAvarias()
-            const avaria = avarias.find(a => a.id === id)
+            const id = req.params.id
+            const avarias = await Avaria.find()
+            let avaria
+
+            if (/^[0-9a-fA-F]{24}$/.test(id)) {
+                // Verificar se é um ID válido do MongoDB
+                avaria = avarias.find(a => a.id === id)
+            } else {
+                return res.status(404).json({ error: 'ID errado!' })
+            }
 
             if (!avaria) {
                 return res.status(404).json({ error: 'Avaria não encontrado' })
@@ -26,76 +33,58 @@ const avariasController = {
     },
     create: async (req, res) => {
         try {
-            let novaAvaria = req.body
-            const idVeiculo = parseInt(req.params.id)
-            const veiculos = await listarVeiculos()
-            const avarias = await listarAvarias()
+            const idVeiculo = req.params.id
 
-            const veiculo = veiculos.find(v => v.id === idVeiculo)
+            const veiculo = Avaria.findById(idVeiculo)
 
             if (!veiculo) {
                 return res.status(404).json({ error: 'Veiculo não existente nos dados!' })
             }
 
-            novaAvaria = {
-                id: avarias.length > 0 ? avarias[avarias.length - 1].id + 1 : 1,
-                ...novaAvaria
-            }
-            
-            avarias.push(novaAvaria)
+            const novaAvaria = new Avaria(req.body)
+            const avariaSalva = await novaAvaria.save()
 
-            await salvarAvarias(avarias)
-            res.status(201).json(novaAvaria)
+            res.status(201).json({message: 'Avaria salva com sucesso', avaria: avariaSalva})
         } catch (error) {
             res.status(500).json({ error: 'Erro ao adicionar avaria' })
         }
     },
     update: async (req, res) => {
         try {
-            const id = parseInt(req.params.id)
+            const id = req.params.id
             const novosDados = req.body
 
-            let avarias = await listarAvarias()
-            const index = avarias.findIndex(a => a.id === id)
-
-            if (index === -1) {
-                return res.status(404).json({ error: 'Avaria não encontrada' })
+            const avariaAtualizada = await Avaria.findByIdAndUpdate(id, novosDados, {
+                new: true, // Retorna o documento atualizado
+                runValidators: true // Garante que as validações do modelo sejam aplicadas
+            })
+            
+            if (!avariaAtualizada) {
+                return res.status(404).json({ error: 'Avaria não encontrado' })
             }
 
-            avarias[index] = { ...avarias[index], ...novosDados }
-
-            await salvarAvarias(avarias)
-            res.json({message: 'Avaria editada com sucesso', avaria:avarias[index]})
+            res.json({message: 'Avaria editada com sucesso', avaria: avariaAtualizada})
         } catch (error) {
             res.status(500).json({ error: 'Erro ao atualizar veículo' })
         }
     },
     delete: async (req, res) => {
         try {
-            let avarias = await listarAvarias()
+            await Avaria.deleteMany()
 
-            avarias.length = 0
-
-            await salvarAvarias(avarias)
-            res.json('Banco de dados deletado com sucesso.')
+            res.json({message: 'Todas as avarias foram deletados com sucesso.'})
         } catch (error) {
             res.status(500).json({ error: 'Erro ao deletar o banco de dados' })
         }
     },
     deleteID: async (req, res) => {
         try {
-            const id = parseInt(req.params.id)
+            const id = req.params.id
 
-            let avarias = await listarAvarias()
-            const index = avarias.findIndex(a => a.id === id)
-            if (index === -1) {
-                return res.status(404).json({ error: 'avaria não encontrado' })
+            const avariaRemovida = await Avaria.findByIdAndDelete(id)
 
-            }
-            const avariaRemovida = avarias.splice(index, 1)
 
-            await salvarAvarias(avarias)
-            res.json(avariaRemovida)
+            res.json({message: 'Avaria deleta com sucesso.', avaria: avariaRemovida})
         } catch (error) {
             res.status(500).json({ error: 'Erro ao deletar avaria' })
         }

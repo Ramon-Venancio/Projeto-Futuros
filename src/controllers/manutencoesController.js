@@ -1,9 +1,9 @@
-import { listarManutencoes, salvarManutencoes } from "../models/manutencoesModel.js"
+import Manutencao from "../models/manutencoesModel.js"
 
 const manutencoesController = {
     index: async (req, res) => {
         try {
-            const manutencoes = await listarManutencoes()
+            const manutencoes = await Manutencao.find()
             res.json(manutencoes)
         } catch (error) {
             res.status(500).json({ error: "Erro ao listar manutenções" })
@@ -11,9 +11,16 @@ const manutencoesController = {
     },
     indexID: async (req, res) => {
         try {
-            const id = parseInt(req.params.id, 10)
-            const manutencoes = await listarManutencoes()
-            const manutencao = manutencoes.find((a) => a.id === id)
+            const id = req.params.id
+            const manutencoes = await Manutencao.find()
+            let manutencao
+
+            if (/^[0-9a-fA-F]{24}$/.test(id)) {
+                // Verificar se é um ID válido do MongoDB
+                manutencao = manutencoes.find(a => a.id === id)
+            } else {
+                return res.status(404).json({ error: 'ID errado!' })
+            }
 
             if (!manutencao) {
                 return res.status(404).json({ error: "Manutenção não encontrada" })

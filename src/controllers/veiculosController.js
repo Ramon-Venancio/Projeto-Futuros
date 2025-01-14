@@ -68,7 +68,8 @@ const veiculosController = {
     },
     deleteID: async (req, res) => {
         try {
-            const id = parseInt(req.params.id)
+            const id = req.params.id
+            console.log(id)
 
             const veiculoRemovido = await Veiculo.findByIdAndDelete(id)
 
