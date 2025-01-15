@@ -1,4 +1,5 @@
 import Avaria from '../models/avariasModel.js'
+import Veiculo from '../models/veiculosModel.js'
 
 const avariasController = {
     index: async (req, res) => {
@@ -12,12 +13,11 @@ const avariasController = {
     indexID: async (req, res) => {
         try {
             const id = req.params.id
-            const avarias = await Avaria.find()
             let avaria
 
             if (/^[0-9a-fA-F]{24}$/.test(id)) {
                 // Verificar se é um ID válido do MongoDB
-                avaria = avarias.find(a => a.id === id)
+                avaria = await Avaria.findById(id)
             } else {
                 return res.status(404).json({ error: 'ID errado!' })
             }
@@ -34,9 +34,14 @@ const avariasController = {
     create: async (req, res) => {
         try {
             const idVeiculo = req.params.id
+            let veiculo
 
-            const veiculo = Avaria.findById(idVeiculo)
-
+            if (/^[0-9a-fA-F]{24}$/.test(idVeiculo)) {
+                veiculo = await Veiculo.exists({ _id: idVeiculo })
+            } else {
+                return res.status(404).json({ error: 'ID invalido!' })
+            }
+            
             if (!veiculo) {
                 return res.status(404).json({ error: 'Veiculo não existente nos dados!' })
             }

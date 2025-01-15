@@ -1,4 +1,6 @@
 import Manutencao from "../models/manutencoesModel.js"
+import Avaria from "../models/avariasModel.js"
+import Veiculo from "../models/veiculosModel.js"
 
 const manutencoesController = {
     index: async (req, res) => {
@@ -12,14 +14,13 @@ const manutencoesController = {
     indexID: async (req, res) => {
         try {
             const id = req.params.id
-            const manutencoes = await Manutencao.find()
             let manutencao
 
             if (/^[0-9a-fA-F]{24}$/.test(id)) {
                 // Verificar se é um ID válido do MongoDB
-                manutencao = manutencoes.find(a => a.id === id)
+                manutencao = Manutencao.findById(id)
             } else {
-                return res.status(404).json({ error: 'ID errado!' })
+                return res.status(404).json({ error: 'ID incorreto!' })
             }
 
             if (!manutencao) {
