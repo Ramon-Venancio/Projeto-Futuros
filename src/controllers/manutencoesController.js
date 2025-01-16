@@ -1,6 +1,7 @@
 import Manutencao from "../models/manutencoesModel.js"
 import Avaria from "../models/avariasModel.js"
 import Veiculo from "../models/veiculosModel.js"
+import Usuario from "../models/usuariosModel.js"
 
 const manutencoesController = {
     index: async (req, res) => {
@@ -18,7 +19,7 @@ const manutencoesController = {
 
             if (/^[0-9a-fA-F]{24}$/.test(id)) {
                 // Verificar se é um ID válido do MongoDB
-                manutencao = Manutencao.findById(id)
+                manutencao = await Manutencao.findById(id)
             } else {
                 return res.status(404).json({ error: 'ID incorreto!' })
             }
@@ -34,18 +35,10 @@ const manutencoesController = {
     },
     create: async (req, res) => {
         try {
-            const novaManutencao = req.body
-            const manutencoes = await listarManutencoes()
+            const novaManutencao = new Manutencao(req.body)
+            const manutencaoSalva = novaManutencao.save()
 
-            const novaManutencaoComId = {
-                id: manutencoes.length > 0 ? manutencoes[manutencoes.length - 1].id + 1 : 1,
-                ...novaManutencao,
-            }
-
-            manutencoes.push(novaManutencaoComId)
-
-            await salvarManutencoes(manutencoes)
-            res.status(201).json(novaManutencaoComId)
+            res.status(201).json({ message:'Manutenção criada', manutencao: manutencaoSalva })
         } catch (error) {
             res.status(500).json({ error: "Erro ao adicionar manutenção" })
         }

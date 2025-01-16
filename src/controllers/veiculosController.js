@@ -30,8 +30,11 @@ const veiculosController = {
     },
     create: async (req, res) => {
         try {
+            console.log(req.body)
             const novoVeiculo = new Veiculo(req.body)
+            console.log(novoVeiculo)
             const veiculoSalvo = await novoVeiculo.save()
+            console.log(veiculoSalvo)
 
             res.status(201).json(veiculoSalvo)
         } catch (error) {

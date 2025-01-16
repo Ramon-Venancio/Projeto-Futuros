@@ -35,7 +35,7 @@ const usersController = {
         try {
             let dados = req.body
 
-            const usuarioExistente = Usuario.exists( dados.email )
+            const usuarioExistente = await Usuario.exists( { email: dados.email } )
 
             if (usuarioExistente) {
                 return res.status(409).json({ error: 'Usuário já existente' })
@@ -57,7 +57,7 @@ const usersController = {
         try {
             let dados = req.body
             
-            const usuarioExistente = Usuario.exists( dados.email )
+            const usuarioExistente = await Usuario.exists( {email: dados.email} )
 
             if (usuarioExistente) {
                 return res.status(409).json({ error: 'Usuário já existente' })
@@ -126,14 +126,14 @@ const usersController = {
         try {
             await Usuario.deleteMany()
 
-            res.json({message: 'Todos os usuario foram deletados com sucesso!'})
+            res.json({message: 'Todos os usuarios foram deletados com sucesso!'})
         } catch (error) {
             res.status(500).json({ error: 'Erro ao deletar o banco de dados' })
         }
     },
     deleteID: async (req, res) => {
         try {
-            const id = parseInt(req.params.id)
+            const id = req.params.id
 
             const usuarioRemovido = await Usuario.findByIdAndDelete(id)
 
@@ -145,7 +145,7 @@ const usersController = {
     login: async (req, res) => {
         try {
             const { email, password } = req.body
-            const usuario = Usuario.findOne({ email })
+            const usuario = await Usuario.findOne({ email })
 
             if (!usuario) {
                 return res.status(401).json({ error: 'Email inválido' })
