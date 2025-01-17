@@ -6,6 +6,7 @@ const usersController = {
     index: async (req, res) => {
         try {
             const usuarios = await Usuario.find()
+            
             res.json(usuarios)
         } catch (error) {
             res.status(500).json({ error: 'Erro ao listar usuários' })
@@ -57,7 +58,7 @@ const usersController = {
         try {
             let dados = req.body
             
-            const usuarioExistente = await Usuario.exists( {email: dados.email} )
+            const usuarioExistente = await Usuario.exists( { email: dados.email } )
 
             if (usuarioExistente) {
                 return res.status(409).json({ error: 'Usuário já existente' })

@@ -5,6 +5,7 @@ const avariasController = {
     index: async (req, res) => {
         try {
             const avarias = await Avaria.find()
+            
             res.json(avarias)
         } catch (error) {
             res.status(500).json({ error: 'Erro ao listar avarias' })
@@ -33,17 +34,16 @@ const avariasController = {
     },
     create: async (req, res) => {
         try {
-            const idVeiculo = req.params.id
-            let veiculo
+            const { localizacao, idVeiculo } = req.body
+            const veiculoExistente = await Veiculo.exists({ _id: idVeiculo })
+            const avariaExistente = await Avaria.exists({ localizacao, idVeiculo })
 
-            if (/^[0-9a-fA-F]{24}$/.test(idVeiculo)) {
-                veiculo = await Veiculo.exists({ _id: idVeiculo })
-            } else {
-                return res.status(404).json({ error: 'ID invalido!' })
+            if (!veiculoExistente) {
+                return res.status(404).json({ message: 'Veiculo não existe!' })
             }
-            
-            if (!veiculo) {
-                return res.status(404).json({ error: 'Veiculo não existente nos dados!' })
+
+            if (avariaExistente) {
+                return res.status(404).json({ message: 'Avaria já existente' })
             }
 
             const novaAvaria = new Avaria(req.body)

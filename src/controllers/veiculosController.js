@@ -4,6 +4,7 @@ const veiculosController = {
     index: async (req, res) => {
         try {
             const veiculos = await Veiculo.find()
+            
             res.json(veiculos)
         } catch (error) {
             res.status(500).json({ error: 'Erro ao listar veículos' })
@@ -30,11 +31,15 @@ const veiculosController = {
     },
     create: async (req, res) => {
         try {
-            console.log(req.body)
+            const { placa } = req.body
+            const veiculoExistente = await Veiculo.exists({ placa })
+
+            if (veiculoExistente) {
+                return res.status(404).json({ message: 'Veiculo já existente!' })
+            }
+
             const novoVeiculo = new Veiculo(req.body)
-            console.log(novoVeiculo)
             const veiculoSalvo = await novoVeiculo.save()
-            console.log(veiculoSalvo)
 
             res.status(201).json(veiculoSalvo)
         } catch (error) {
