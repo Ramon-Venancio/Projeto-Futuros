@@ -8,29 +8,30 @@ const manutencoesController = {
         try {
             const manutencoes = await Manutencao.find()
 
-            res.json(manutencoes)
+            res.status(200).json(manutencoes)
         } catch (error) {
+            console.error('Erro ao buscar manutenções:', error.message)
             res.status(500).json({ error: "Erro ao listar manutenções" })
         }
     },
     indexID: async (req, res) => {
         try {
             const id = req.params.id
-            let manutencao
 
-            if (/^[0-9a-fA-F]{24}$/.test(id)) {
-                // Verificar se é um ID válido do MongoDB
-                manutencao = await Manutencao.findById(id)
-            } else {
-                return res.status(404).json({ error: 'ID incorreto!' })
+            // Verificar se é um ID válido do MongoDB
+            if (!/^[0-9a-fA-F]{24}$/.test(id)) {
+                return res.status(400).json({ error: 'ID incorreto!' })
             }
+
+            const manutencao = await Manutencao.findById(id)
 
             if (!manutencao) {
                 return res.status(404).json({ error: "Manutenção não encontrada" })
             }
 
-            res.json(manutencao)
+            res.status(200).json(manutencao)
         } catch (error) {
+            console.error('Erro ao buscar manutenção:', error.message)
             res.status(500).json({ error: "Erro ao mostrar a manutenção" })
         }
     },
@@ -65,8 +66,9 @@ const manutencoesController = {
                 return res.status(404).json({ message: 'Manutenção não encontrada!' })
             }
 
-            res.json({ message: "Manutenção editada com sucesso", manutencao: manutencaoAtualizada, })
+            res.status(200).json({ message: "Manutenção editada com sucesso", manutencao: manutencaoAtualizada, })
         } catch (error) {
+            console.error('Erro ao atualizar manutenção:', error.message)
             res.status(500).json({ error: "Erro ao atualizar manutenção" })
         }
     },
@@ -83,13 +85,17 @@ const manutencoesController = {
         try {
             const id = req.params.id
 
+            if (!/^[0-9a-fA-F]{24}$/.test(id)) {
+                return res.status(400).json({ error: 'ID inválido!' })
+            }
+
             const manutencaoRemovida = Manutencao.findByIdAndDelete(id)
 
             res.json(manutencaoRemovida)
         } catch (error) {
             res.status(500).json({ error: "Erro ao deletar manutenção" })
         }
-    },
+    }
 }
 
 export default manutencoesController

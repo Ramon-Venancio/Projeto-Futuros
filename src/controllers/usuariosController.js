@@ -5,31 +5,32 @@ import bcrypt from 'bcryptjs'
 const usersController = {
     index: async (req, res) => {
         try {
-            const usuarios = await Usuario.find()
+            const usuarios = await Usuario.find().select('-password')
             
-            res.json(usuarios)
+            res.status(200).json(usuarios)
         } catch (error) {
-            res.status(500).json({ error: 'Erro ao listar usuários' })
+            console.error('Erro ao listar usuarios:', error.message)
+            res.status(500).json({ error: 'Erro ao listar usuarios' })
         }
     },
     indexID: async (req, res) => {
         try {
             const id = req.params.id
-            let usuario
             
-            if (/^[0-9a-fA-F]{24}$/.test(id)) {
-                usuario = Usuario.findById(id)
-            } else {
-                return res.status(404).json({ error: 'ID errado!' })
+            if (!/^[0-9a-fA-F]{24}$/.test(id)) {
+                return res.status(400).json({ error: 'ID errado!' })
             }
-
+            
+            const usuario = await Usuario.findById(id).select('-password')
+            
             if (!usuario) {
-                return res.status(404).json({ error: 'Usuário não encontrado' })
+                return res.status(404).json({ error: 'Usuario não encontrado' })
             }
 
-            res.json(usuario)
+            res.status(200).json(usuario)
         } catch (error) {
-            res.status(500).json({ error: 'Erro ao procurar usuário' })
+            console.error('Erro ao buscar usuario:', error.message)
+            res.status(500).json({ error: 'Erro ao procurar usuario' })
         }
     },
     createFuncionario: async (req, res) => {
@@ -39,7 +40,7 @@ const usersController = {
             const usuarioExistente = await Usuario.exists( { email: dados.email } )
 
             if (usuarioExistente) {
-                return res.status(409).json({ error: 'Usuário já existente' })
+                return res.status(409).json({ error: 'Usuario ja existente' })
             }
 
             dados.password = await bcrypt.hash(String(dados.password), 10)
@@ -49,9 +50,10 @@ const usersController = {
             const usuarioSalvo = await novoUsuario.save()
             
 
-            res.status(201).json({ message: 'Usuário criado com sucesso!', usuario: usuarioSalvo })
+            res.status(201).json({ message: 'Usuario criado com sucesso!', usuario: usuarioSalvo })
         } catch (error) {
-            res.status(500).json({ error: 'Erro ao adicionar usuário' })
+            console.error('Erro ao adicionar funcionario:', error.message)
+            res.status(500).json({ error: 'Erro ao adicionar usuario' })
         }
     },
     createAdmin: async (req, res) => {
@@ -61,7 +63,7 @@ const usersController = {
             const usuarioExistente = await Usuario.exists( { email: dados.email } )
 
             if (usuarioExistente) {
-                return res.status(409).json({ error: 'Usuário já existente' })
+                return res.status(409).json({ error: 'Usuario ja existente' })
             }
 
             dados.password = await bcrypt.hash(String(dados.password), 10)
@@ -70,9 +72,10 @@ const usersController = {
             const novoUsuario = new Usuario(dados)
             const usuarioSalvo = await novoUsuario.save()
 
-            res.status(201).json({ message: 'Usuário criado com sucesso!', usuario: usuarioSalvo })
+            res.status(201).json({ message: 'Usuario criado com sucesso!', usuario: usuarioSalvo })
         } catch (error) {
-            res.status(500).json({ error: 'Erro ao adicionar usuário' })
+            console.error('Erro ao adicionar administrador:', error.message)
+            res.status(500).json({ error: 'Erro ao adicionar usuario' })
         }
     },
     createSuperAdmin: async (req, res) => {
@@ -81,27 +84,26 @@ const usersController = {
 
             // Valida a chave secreta
             if (dados.secretKey !== process.env.SUPER_ADMIN_KEY) {
-                return res.status(403).json({ error: "Chave secreta inválida!" });
+                return res.status(403).json({ error: "Chave secreta invalida!" });
             }
 
             const usuarioExistente = await Usuario.exists( {email: dados.email} );
 
             if (usuarioExistente) {
-                return res.status(409).json({ error: "Usuário já existente!" });
+                return res.status(409).json({ error: "Usuario ja existente!" });
             }
-            console.log("antes do password")
+
             dados.password = await bcrypt.hash(String(dados.password), 10)
-            console.log("antes do role")
             dados.role = 'admin'
-            console.log("isSuperAdmin")
             dados.isSuperAdmin = true
 
             const novoUsuario = new Usuario(dados)
             const usuarioSalvo = await novoUsuario.save()
 
-            res.status(201).json({ message: "Superusuário criado com sucesso!", usuario: usuarioSalvo });
+            res.status(201).json({ message: "Superusuario criado com sucesso!", usuario: usuarioSalvo });
         } catch (error) {
-            res.status(500).json({ error: "Erro ao criar superusuário" });
+            console.error('Erro ao adicionar super administrador:', error.message)
+            res.status(500).json({ error: "Erro ao criar superusuario" });
         }
     },
     update: async (req, res) => {
@@ -109,26 +111,34 @@ const usersController = {
             const id = req.params.id
             const novosDados = req.body
 
-            const usuarioAtualizado = await Usuario.findByIdAndUpdate( id, novosDados, {
-                new: true,
-                runValidators: true
-            })
+            const usuario = await Usuario.findById(id)
 
-            if (!usuarioAtualizado) {
-                return res.status(404).json({ error: 'Usuario não encontrado' })
+            if (!usuario) {
+                return res.status(404).json({ error: 'Usuário não encontrado' });
             }
 
-            res.json({ message: 'Alteração feita com sucesso!', usuario: usuarioAtualizado })
+            if (novosDados.password) {
+                const salt = await bcrypt.genSalt(10);
+                novosDados.password = await bcrypt.hash(String(novosDados.password), salt)
+            }
+
+            Object.assign(usuario, novosDados)
+
+            await usuario.save()
+
+            res.status(200).json({ message: 'Alteração feita com sucesso!', usuario })
         } catch (error) {
-            res.status(500).json({ error: 'Erro ao atualizar usuário' })
+            console.error('Erro ao atualizar usuario:', error.message)
+            res.status(500).json({ error: 'Erro ao atualizar usuario' })
         }
     },
     delete: async (req, res) => {
         try {
             await Usuario.deleteMany()
 
-            res.json({message: 'Todos os usuarios foram deletados com sucesso!'})
+            res.status(200).json({message: 'Todos os usuarios foram deletados com sucesso!'})
         } catch (error) {
+            console.error('Erro ao deletar usuarios:', error.message)
             res.status(500).json({ error: 'Erro ao deletar o banco de dados' })
         }
     },
@@ -136,11 +146,16 @@ const usersController = {
         try {
             const id = req.params.id
 
+            if (!/^[0-9a-fA-F]{24}$/.test(id)) {
+                return res.status(400).json({ error: 'ID invalido!' })
+            }
+
             const usuarioRemovido = await Usuario.findByIdAndDelete(id)
 
-            res.json({ message: 'Usuário deletado com sucesso!', usuario: usuarioRemovido })
+            res.status(204).json({ message: 'Usuario deletado com sucesso!', usuario: usuarioRemovido })
         } catch (error) {
-            res.status(500).json({ error: 'Erro ao deletar usuário' })
+            console.error('Erro ao deletar usuario:', error.message)
+            res.status(500).json({ error: 'Erro ao deletar usuario' })
         }
     },
     login: async (req, res) => {
@@ -149,24 +164,24 @@ const usersController = {
             const usuario = await Usuario.findOne({ email })
 
             if (!usuario) {
-                return res.status(401).json({ error: 'Email inválido' })
+                return res.status(401).json({ error: 'Email invalido!' })
             }
 
             const senhaValida = await bcrypt.compare(String(password), usuario.password)
 
             if (!senhaValida) {
-                return res.status(401).json({ erro: 'Senha inválidos' });
+                return res.status(401).json({ erro: 'Senha invalida!' });
             }
 
             // Gera o token JWT
             const token = jwt.sign(
-                { id: usuario.id, email: usuario.email, role: usuario.role }, // Payload: dados do usuário
+                { id: usuario.id, email: usuario.email, role: usuario.role }, // Payload: dados do usuario
                 process.env.JWT_SECRET, // Chave secreta
-                { expiresIn: '7d' } // Token válido por 7 dias
+                { expiresIn: '7d' } // Token valido por 7 dias
             )
 
             // Envia o token para o cliente
-            res.json({ token, user: usuario, message: 'Login realizado com sucesso!' })
+            res.status(200).json({ token, user: usuario, message: 'Login realizado com sucesso!' })
         } catch (error) {
             res.status(500).json({ error: 'Erro ao tentar logar' })
         }
